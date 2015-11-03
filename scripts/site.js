@@ -260,11 +260,17 @@
                                 '</div>'+
                               '</div>'
 
-      var close = document.querySelector('.overlay_close');
+    var close = document.querySelector('.overlay_close');
+    var overlay = document.querySelector('.overlay');
 
      close.addEventListener('click', function(){
         inject.innerHTML = "";
      });
+
+    overlay.addEventListener('click', function(){
+        inject.innerHTML = "";
+     });
+
 
      pressMe.closeModal = function(e){
        inject.innerHTML = "";
@@ -789,6 +795,9 @@
   personalisedAdress()
 
 
-  console.log(pressMe);
+  /* Instagram post opening in new tab */
+  [].forEach.call(document.querySelectorAll('.instagram_box .image-slide-anchor'), function(el,i,a) {
+    el.setAttribute('target', '_blank');
+  });
 
 }());
