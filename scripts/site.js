@@ -234,6 +234,14 @@
       body.classList.add('modal-active');
       modal.classList.remove('hidden');
       modal.classList.add('visible');
+
+      if (body.classList.contains('side_menu_open')) {
+        body.classList.remove('side_menu_open');
+      };
+
+      if(mq.matches){
+        window.scrollTo(0,0);
+      }
     });
 
     close.addEventListener('click', closeModal);
