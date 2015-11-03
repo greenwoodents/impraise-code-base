@@ -1,0 +1,135 @@
+.contact {
+  overflow: hidden;
+  @media @small {
+    padding: 0 3%;
+    width: 100%;
+  }
+  @media @medium {
+    width: 600px;
+    margin: 0 auto;
+    padding-bottom: 80px;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 40px;
+
+    @media @small {
+      margin-bottom: 13px;
+    }
+  }
+
+  .contact_box {
+    width: 50%;
+    float: left;
+    margin-bottom: 28px;
+    @media @medium {
+      padding-left: 50px;
+    }
+  }
+
+
+  .contact_box_mobile {
+    width: 100%;
+    text-align: center;
+    display: block;
+    margin-bottom: 15px;
+
+    .contact_item {
+      display:  inline-block;
+      font-weight: 600;
+      color: @mainColor;
+
+      &:after {
+        display: inline-block;
+        font-size: 16px;
+        color: #788996;
+        line-height: 40px;
+        font-weight: 600;
+        width: inherit;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .contact_item {
+    font-size: 16px;
+    color: #30393F;
+    line-height: 20px;
+    padding-left: 34px;
+    position: relative;
+
+    &:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+
+    &:after{
+      width: 100%;
+      display: block;
+      opacity: 0.75;
+      font-size: 12px;
+      color: #657684;
+      line-height: 16px;
+    }
+
+    &.us:after{
+      content: '(US)';
+    }
+    &.eu:after{
+      content: '(EU)';
+    }
+
+    &.phone:before {
+      top: 2px;
+      background-image: url(../assets/ics/ic_call.svg);
+
+      @media @small {
+        top: 10px;
+      }
+    }
+
+    &.email:before {
+      top: 1px;
+      background-image: url(../assets/ics/ic_email.svg);
+
+      @media @small {
+        top: 2px;
+      }
+    }
+
+    &.adress:before {
+      top: -1px;
+      background-image: url(../assets/ics/ic_domain.svg);
+    }
+
+    &.adress span {
+      opacity: 0.75;
+      font-size: 12px;
+      color: #657684;
+      display: block;
+      line-height: 24px;
+    }
+
+    &.email a {
+      font-weight: 600;
+
+      &:hover {
+        color: @mainColor;
+        opacity: .7;
+      }
+    }
+
+    @media @small {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}

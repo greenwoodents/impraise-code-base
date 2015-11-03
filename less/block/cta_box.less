@@ -1,0 +1,116 @@
+.cta_box {
+  overflow: hidden;
+  @media @small {
+    .header_button {
+      display: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  @media @medium {
+    background: #30393F;
+    border-top: 1px solid #5A6166;
+  }
+
+  .cta_box_half {
+    margin: 68px 0 28px;
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    position: relative;
+
+    font-family: @openSans;
+    color: @mainColor;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 800;
+
+    @media @medium {
+      font-size: 28px;
+      line-height: 40px;
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+  }
+
+
+  .cta_boxes {
+
+    width:  320px;
+    margin: 0 auto;
+
+
+    @media only screen and (min-width: 470px) {
+      transform: translateX(25%);
+    }
+
+    @media @medium {
+      width: 740px;
+      transform: translateX(0);
+    }
+  }
+
+
+  .cta_box_notebook {
+    background-image: url(../assets/macbook@2x.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100%;
+    height: 170px;
+    display: block;
+
+    @media @small {
+      width: 200%;
+      transform: translateX(-50%);
+    }
+
+    @media @medium {
+      height: 260px;
+    }
+  }
+
+  .cta_box_text {
+    position: relative;
+    padding-top: 20%;
+
+    @media @medium {
+      padding-right: 40px;
+
+      a,
+      .ic_arrow_forward {
+        transition: 300ms;
+      }
+
+      a {
+        color: #fff;
+
+        &:hover {
+          color: @mainColor;
+
+          .ic_arrow_forward {
+            fill: @mainColor;
+          }
+        }
+      }
+    }
+
+    @media @small {
+      font-weight: 700;
+      a {
+        color: @mainColor;
+      }
+    }
+  }
+  .cta_box_text_ic {
+    margin-left: 8px;
+  }
+  .ic_arrow_forward {
+    fill: @mainColor;
+    @media @medium {
+      fill: #fff;
+    }
+  }
+
+}

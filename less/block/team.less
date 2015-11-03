@@ -1,0 +1,388 @@
+.team-page {
+  overflow: hidden;
+}
+
+.team {
+  .team_person {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 320px;
+
+    @media @medium {
+      width: 33.33%;
+      float: left;
+      height: 400px;
+      padding: 0 7px;
+    }
+
+    margin-bottom: 12px;
+
+    &:hover {
+
+      .team_person_description {
+        transform: translateY(40px);
+      }
+
+      .team_person_description_des {
+        opacity: 1;
+        visibility: visible;
+      }
+      .team_person_image:after  {
+        background-color: #30393F;
+        opacity: .8;
+      }
+      .team_person_description_hr {
+        opacity: 1;
+      }
+    }
+  }
+
+  .team_person_image {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+
+    &:after {
+      transition: 300ms;
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(-180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.24) 56%, rgba(0,0,0,0.76) 99%);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 0 8px;
+    }
+  }
+  .team_person_wrap {
+    width: 94%;
+  }
+
+  .team_person_description {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    text-align: center !important;
+    color: #fff;
+    padding: 0 32px;
+
+    transition: 500ms ease-in-out;
+    transform: translateY(248px);
+
+    @media @small {
+      transform: translateY(176px);
+      padding: 0 20px;
+    }
+
+  }
+
+  .team_person_description_positon {
+    /* CEO: */
+    opacity: 0.75;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .team_person_description_name {
+    font-weight: 700;
+    font-size: 24px;
+    color: #FFFFFF;
+    line-height: 36px;
+
+    @media @medium {
+      font-size: 28px;
+      line-height: 40px;
+    }
+  }
+
+  .team_person_description_hr {
+    transition: 500ms ease-in-out;
+    background: #FFA837;
+    width: 24px;
+    height: 2px;
+    opacity: 0;
+    margin: 6px auto 13px;
+  }
+
+  .team_person_description_des {
+    transition: 500ms ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      color: #fff;
+
+    }
+  }
+}
+
+
+.team-advisor {
+  @media @medium {
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    float: none;
+
+
+    .team_person {
+      width: 320px;
+      height: 320px;
+      padding: 0;
+
+      float: none;
+    }
+
+    .team_person_description {
+      transform: translateY(176px);
+      padding: 0 20px;
+    }
+  }
+
+}
+
+
+.investors {
+
+  .investors_description {
+    text-align: center;
+    margin-top: 21px;
+  }
+
+  .investors_item {
+    width: 100%;
+    padding: 0 2%;
+    overflow: hidden;
+    position: relative;
+
+
+    @media @medium {
+      width: 33.33%;
+      float: left;
+      height: 400px;
+      padding: 0 7px;
+    }
+  }
+
+  .investors_image {
+    width: 160px;
+    height: 160px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 300px;
+    margin: 0 auto;
+  }
+
+  .investors_description_name {
+    font-family: @openSans;
+    font-size: 28px;
+    color: #30393F;
+    line-height: 40px;
+    font-weight: 700;
+  }
+
+  .investors_description_positon {
+    opacity: 0.75;
+    font-family: OpenSans;
+    font-size: 12px;
+    color: #657684;
+    line-height: 16px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+.boxes {
+  overflow: hidden;
+  .half-box {
+    width: 50%;
+    float: left;
+
+    @media @small {
+      width: 100%;
+    }
+  }
+}
+.team-quote {
+  @media @medium {
+   margin-bottom: 60px;
+  }
+}
+//team-qoute
+.qoutebox {
+  background: #F3F5F7;
+  @media @small {
+    padding: 24px 2%;
+    margin-bottom: 50px;
+  }
+
+  @media @medium {
+    height: 426px;
+    background-color: @mainColorDarker;
+  }
+
+  .qoutebox_qoute {
+    text-align: center;
+    font-family: @georgia;
+    font-size: 18px;
+    color: #30393F;
+    line-height: 28px;
+    font-style: italic;
+
+    @media @medium {
+      font-family: @cooperLight;
+      font-size: 28px;
+      color: #FFFFFF;
+      line-height: 32px;
+      padding: 80px 64px 0;
+    }
+  }
+
+
+
+  .cart_person {
+    @media @medium {
+      margin-top: 50px;
+    }
+    @media @small {
+      padding-left: 0;
+      text-align: center;
+    }
+  }
+  .cart_person_image {
+    background-color: #FFD7A3;
+    .avatar {
+      border-color: #FF9E21;
+    }
+    @media @small {
+      display: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  .cart_person_name {
+    color: #fff;
+
+    @media @small {
+      opacity: 0.75;
+      font-size: 12px;
+      color: #657684;
+      line-height: 16px;
+      font-weight: 400;
+    }
+  }
+
+  .cart_person_position {
+    color: #657684;
+
+    @media @medium {
+      opacity: 0.75;
+      font-size: 12px;
+      color: #fff;
+      opacity: .75;
+      line-height: 16px;
+    }
+    @media @small {
+      display: inline-block;
+      width: inherit;
+      color: #657684;
+      margin-left: 3px;
+    }
+  }
+}
+
+.videobox {
+  height: 426px;
+  background-image: url(../assets/team/video.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  @media @small {
+    display: none;
+  }
+}
+
+
+
+
+
+.instagram_box {
+  position: relative;
+
+  h1, h2, h3, p {
+    color: #FFFFFF;
+  }
+
+  hr {
+    background: #fff;
+  }
+
+  p {
+    opacity: 0.6;
+  }
+}
+
+.instagram_bcg_box {
+  height: 424px;
+  background-color: #30393F;
+  position: absolute;
+  width: 100%;
+  top: 40px;
+  left: 0;
+  z-index: -1;
+
+  &:after {
+    content: '';
+    width: 200%;
+    height: 100%;
+    background-color: #30393F;
+    position: absolute;
+    top: -130px;
+    left: -50%;
+    z-index: -1;
+    transform: rotate(-4deg);
+  }
+  &:before {
+    content: '';
+    width: 200%;
+    height: 100%;
+    background-color: #30393F;
+    position: absolute;
+    bottom: -130px;
+    left: -50%;
+    z-index: -1;
+    transform: rotate(4deg);
+  }
+}
+
+
+
+
+
+.team-page {
+  @media @small {
+    p, h2 {
+      text-align: left;
+    }
+  }
+
+}
+

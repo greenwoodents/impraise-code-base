@@ -1,0 +1,218 @@
+.wrote-about_large_wrap {
+padding-bottom: 44px;
+}
+
+.wrote-about {
+  color: #30393F;
+  position: relative;
+  text-align: center;
+
+
+  @media @medium {
+    background: #F8F8F8;
+
+    .wclear {
+      overflow: hidden;
+    }
+  }
+
+
+
+  .wrote-about_wrap {
+    width: 100%;
+    padding: 0 2%;
+    position: relative;
+    text-align: left;
+
+    @media @medium {
+      width: 812px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+
+    @media @medium {
+      &:after {
+        content: '';
+        width: 431px;
+        height: 376px;
+        position: absolute;
+        top: -110px;
+        left: -490px;
+        background-image: url('../assets/homepage/news_coffe.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+      &:before {
+        content: '';
+        width: 431px;
+        height: 376px;
+        position: absolute;
+        top: 59px;
+        right: -400px;
+        background-image: url('../assets/homepage/news_papers.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+    }
+
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 40px;
+
+    @media @small {
+      opacity: 0.75;
+      font-size: 12px;
+      color: #657684;
+      line-height: 16px;
+      font-weight: 500;
+    }
+
+    @media @medium {
+      display: inline-block;
+      position: relative;
+      &:after {
+        content: '';
+        width: 30px;
+        height: 24px;
+        background-image: url(../assets/ics/ic_news.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        position: absolute;
+        top: 8px;
+        left: -57px;
+      }
+    }
+  }
+
+  .wrote-about_item {
+    overflow: hidden;
+    margin-bottom: 10px;
+    transition: 300ms;
+
+    @media @small {
+      text-align: center;
+      background: #FFFFFF;
+      box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 7px 0px rgba(0,0,0,0.26);
+      border-radius: 3px;
+      width: 94%;
+      margin: 0 auto;
+      padding: 33px 3% 23px;
+    }
+
+    @media @medium {
+      &:hover {
+        opacity: .7;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .wrote-about_item_logo {
+    width: 100px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    float: left;
+    position: relative;
+    top: -2px;
+    margin-left: 20px;
+  }
+
+  .wrote-about_item_content {
+    font-size: 16px;
+    color: #30393F;
+    line-height: 24px;
+    font-style: italic;
+    margin-bottom: 3px;
+  }
+
+  .wrote-about_item_content_meta {
+    p {
+      /* by Catherine Shu: */
+      opacity: 0.75;
+      font-size: 12px;
+      color: #657684;
+      line-height: 16px;
+      float: left;
+      padding-top: 4px;
+    }
+  }
+
+  .wrote-about_item--main {
+    width: 50%;
+    height: 100%;
+    float: left;
+    padding-right: 25px;
+
+    @media @small {
+      width: 94%;
+      max-width: 350px;
+      float: none;
+      margin: 0 auto;
+    }
+
+    .wrote-about_item_line {
+      opacity: 0.1;
+      background: #30393F;
+      width: 100%;
+      height: 8px;
+      margin-bottom: 33px;
+    }
+
+    .wrote-about_item_content {
+      font-family: @cooperLight;
+      font-size: 28px;
+      line-height: 42px;
+      margin-bottom: 20px;
+      font-style: normal;
+
+      @media @small {
+        font-size: 18px;
+        color: #30393F;
+        line-height: 28px;
+        font-family: @openSans;
+      }
+    }
+
+    .cart_person {
+      padding-left: 90px;
+    }
+
+    .cart_person_name {
+      color: #30393F;
+          margin-top: 8px;
+    }
+
+    .cart_person_image {
+      width: 74px;
+      height: 74px;
+      .avatar {
+        width: 66px;
+        height: 66px;
+        bottom: 4px;
+        left: 4px;
+        border-color: #fff;
+      }
+    }
+
+    .learn_more_link {
+      margin-top: 15px;
+      font-weight: 700;
+    }
+
+      .wrote-about_item_logo {
+        float: right;
+        position: relative;
+        top: 13px;
+        margin-left: 0;
+        margin-right: 30px;
+      }
+  }
+}

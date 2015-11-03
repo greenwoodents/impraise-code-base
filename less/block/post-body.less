@@ -1,0 +1,47 @@
+@postContainer: 877px;
+@postContainerText: 600px;
+
+.post_body {
+  position: relative;
+  width: 100%;
+  padding: 0 3%;
+  overflow-x: hidden;
+
+  @media @medium {
+    margin: 54px auto 0;
+  }
+
+  @media @xmedium {
+    width: @postContainer;
+  }
+}
+
+.post_body_content {
+    width: 100%;
+
+  @media @medium {
+    width: @postContainerText;
+    margin: 0 auto;
+  }
+}
+
+.footer {overflow-x: hidden;}
+
+
+//editing SQS block
+.sqs-block-summary,
+.sqs-block-summary-v2,
+.sqs-block-summary-v3,
+[data-block-type="55"] {
+  @media @1000 {
+    width: 146%;
+    transform: translateX(-23%);
+  }
+}
+
+@media @small {
+  .quote-block {
+    padding-top: 5px;
+    padding-bottom: 0;
+  }
+}

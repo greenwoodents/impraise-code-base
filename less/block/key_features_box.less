@@ -1,0 +1,47 @@
+.key_features {
+  @media @medium {
+    padding-top: 90px;
+    padding-bottom: 85px;
+
+    h2 {
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 18px;
+      color: #30393F;
+      line-height: 28px;
+    }
+  }
+   @media @small {
+   .key_features_box:nth-child(odd) {
+      background: #F5F5F3;
+    }
+  }
+
+
+  .key_features_box {
+    overflow: hidden;
+    @media @medium {
+       margin-bottom: 50px;
+    }
+  }
+
+  .key_features_box:nth-child(even) {
+    .key_features_box_half {
+      @media @medium {
+        float: left;
+      }
+    }
+  }
+
+
+  .key_features_box_half {
+    width: 100%;
+
+    @media @medium {
+      width: 50%;
+      float: right;
+      vertical-align: top;
+    }
+  }
+}
