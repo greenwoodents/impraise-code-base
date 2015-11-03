@@ -792,7 +792,7 @@
 
     getState();
   }
-  personalisedAdress()
+  personalisedAdress();
 
 
   /* Instagram post opening in new tab */
