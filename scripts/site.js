@@ -45,17 +45,25 @@
 
 
   /**
-   * Alowing download images on desktop.
+   * Alowing download images on desktop and mobile depending on chosen class chekImages for mobile and lazyImage for everything.
    */
   resizeMe.checkMobileImages = function() {
     if (!(mq.matches)) {
       [].forEach.call(document.querySelectorAll('.checkImages'), function(el,i,a) {
-        var img = el.getAttribute('data-image-url');
-        if( img !== null){
-          el.setAttribute('style', 'background-image: url('+ img +');');
-          el.removeAttribute('data-image-url');
-        }
+        loadImage(el);
       });
+    }
+
+    [].forEach.call(document.querySelectorAll('.lazyImage'), function(el,i,a) {
+      loadImage(el);
+    });
+
+    function loadImage(el) {
+      var img = el.getAttribute('data-image-url');
+      if( img !== null){
+        el.setAttribute('style', 'background-image: url('+ img +');');
+        el.removeAttribute('data-image-url');
+      }
     }
   };
   resizeMe.checkMobileImages();
@@ -74,6 +82,7 @@
       ImageLoader.load(images[i]);
     }
   };
+  resizeMe.refreshImages();
 
    /**
    * Initializing some scripts after page load
@@ -95,6 +104,9 @@
 
 
   function infiniteScroll(parent, post) {
+    if(!(document.querySelector('.js-blog'))){
+      return;
+    }
     // Set some variables. We'll use all these later.
     var postIndex = 1,
         execute = true,
@@ -104,9 +116,10 @@
         presentNumber = Y.all(post).size();
 
     scrollMe.infinite = function() {
-      if(document.querySelector('.js-blog')){
+      if(!(document.querySelector('.js-blog'))){
         return;
       }
+
       if (presentNumber >= postNumber && execute === true) {
         Y.one(parent).append('<h1>There are no more posts.</h1>')
         execute = false;
@@ -252,11 +265,12 @@
 
   [].forEach.call(document.querySelectorAll('.js-video'), function(el,i,a) {
     var inject = document.querySelector('.overlays');
+    var url = el.getAttribute('data-video');
     el.addEventListener('click', function(){
       inject.innerHTML  =     '<div class="overlay">'+
                                 '<div class="overlay_close"><svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7 14 1.41z" fill="#FFF" fill-rule="evenodd"/></svg></div>'+
                                 '<div class="overlay_container">'+
-                                  '<iframe id="s9zzxkFbr8A-placeholder" frameborder="0" allowfullscreen="1" title="YouTube video player" width="1000" height="562" src="https://www.youtube.com/embed/s9zzxkFbr8A?autoplay=1&amp;rel=0&amp;showinfo=0&amp;theme=light&amp;color=white&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fwww.impraise.com"></iframe>'+
+                                  '<iframe id="s9zzxkFbr8A-placeholder" frameborder="0" allowfullscreen="1" title="YouTube video player" width="1000" height="562" src="https://www.youtube.com/embed/'+url+'?autoplay=1&amp;rel=0&amp;showinfo=0&amp;theme=light&amp;color=white&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fwww.impraise.com"></iframe>'+
                                 '</div>'+
                               '</div>'
 
@@ -489,8 +503,11 @@
     Share buttons affix
   */
   scrollMe.affix = function() {
+    if (!(document.querySelector('.social_block'))){
+      return;
+    }
     var jsAboutUsNav = document.querySelector('.social_block');
-    var hp = document.querySelector('.homepage');
+    var hp = document.querySelector('.page');
 
     if(mq.matches){
       jsAboutUsNav.style.cssText = null;
@@ -738,7 +755,7 @@
 
       el.querySelector('.new-price .price').innerHTML = (monthlyUserPaidYearly * ratio[activeRatio]).toFixed(2);
       el.querySelector('.total_price .price').innerHTML = (totalYearly * ratio[activeRatio]).toFixed(0);
-      el.querySelector('.total_save .price').innerHTML = ( (((price * 12) * numUsers) - totalYearly) * ratio[activeRatio] ).toFixed(0);
+      el.querySelector('.total_save .price').innerHTML = '-' + ( (((price * 12) * numUsers) - totalYearly) * ratio[activeRatio] ).toFixed(0);
 
       content.classList.add('calculated');
       content.classList.add('discount');
@@ -800,4 +817,28 @@
     el.setAttribute('target', '_blank');
   });
 
+  /* masonry listeners and filter handler. */
+  function masonry() {
+    if(!(document.querySelector('.masonry'))) {
+      return;
+    }
+
+    [].forEach.call(document.querySelectorAll('.masonry_selector_item'), function(el,i,a) {
+      el.addEventListener('click', function(e){
+        var filter = e.target.getAttribute('data-filter');
+        console.log(filter, document.querySelector('.masonry_selector'));
+        document.querySelector('.masonry_selector_title').textContent = e.target.textContent;
+        document.querySelector('.masonry_selector').classList.remove('active');
+
+        iso.arrange({ filter: filter });
+      })
+    });
+
+    document.querySelector('.masonry_selector_title').addEventListener('click', function(e){
+      console.log('clikcity click');
+      document.querySelector('.masonry_selector').classList.add('active');
+    })
+
+  };
+  masonry();
 }());

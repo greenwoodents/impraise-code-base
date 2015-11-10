@@ -1071,6 +1071,48 @@
 }
 
 
+.header-feature {
+  background-color: #313339;
+  position: relative;
+  overflow: hidden;
+  @media @medium {
+    min-height: 640px;
+  }
+  h1 {
+    margin-bottom: 0px;
+  }
+
+  @media @medium {
+    .header_content-basic_background {
+      left: 50%;
+      min-width: 1500px;
+      transform: translateX(-50%);
+    }
+  }
+
+  @media @small {
+    min-height: 420px;
+
+    .header_content-basic_background  {
+       img {
+          position: absolute !important;
+          top: initial  !important;
+          bottom: 0;
+       }
+    }
+  }
+}
+
+
+.header_content-basic_background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
 
 
 

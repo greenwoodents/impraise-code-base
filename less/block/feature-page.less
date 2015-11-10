@@ -1,0 +1,59 @@
+.page--feature {
+  overflow: hidden;
+  p {
+    line-height: 28px;
+  }
+
+  h2 {
+    margin-bottom: 11px;
+  }
+
+  @media @small {
+    .row .col,
+    .sqs-block {
+      width: 100%;
+    }
+  }
+
+  @media @medium {
+
+  }
+
+  @media @small {
+    .svg-icon {
+      opacity: 0;
+      display: none;
+    }
+
+    .spacer-block {
+      width: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+      font-size: 0;
+      display: none;
+      visibility: hidden;
+    }
+
+    .code-block {
+      padding: 0;
+    }
+  }
+}
+
+
+@media @medium {
+  .svg-icon {
+    position: absolute;
+    // top: 44px;
+    // left: -30px;
+    top: 59px;
+    left: -15px;
+  }
+
+  .sqs-hide-overlay-widgets .svg-icon,
+  .sqs-edit-mode .svg-icon {
+    top: 44px;
+    left: -30px;
+  }
+}
