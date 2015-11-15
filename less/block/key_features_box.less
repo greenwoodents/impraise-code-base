@@ -15,6 +15,11 @@
    @media @small {
    .key_features_box:nth-child(odd) {
       background: #F5F5F3;
+      padding: 40px 24px;
+      margin-top: 0px;
+    }
+    .small-wrap {
+      padding: 0;
     }
   }
 
@@ -23,6 +28,10 @@
     overflow: hidden;
     @media @medium {
        margin-bottom: 50px;
+    }
+    @media @small {
+      padding: 0 24px;
+      margin-top: 20px;
     }
   }
 
@@ -42,6 +51,18 @@
       width: 50%;
       float: right;
       vertical-align: top;
+    }
+
+    @media @small {
+      h2 {
+        font-size: 24px;
+        line-height: 36px;
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 28px;
+      }
     }
   }
 }

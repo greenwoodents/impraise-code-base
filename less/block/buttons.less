@@ -197,6 +197,11 @@ button,
   color: @textColor !important;
   letter-spacing: 0 !important;
   font-weight: 700 !important;
+
+  @media @small {
+    background: @mainColorDarker !important;
+    color: #fff !important;
+  }
 }
 
 
@@ -213,7 +218,7 @@ button,
     background-color: @bcgC;
 
     .ic path {
-       fill: @mainColorDarker;
+       fill: @textC;
     }
   }
 }
@@ -271,6 +276,7 @@ button,
 
 
   //Desktop
+
   &.desktop_main_color {
     .desktop-btn(#fff, @mainColorDarker);
   }
@@ -285,11 +291,15 @@ button,
   //Mobile
   @media @small {
     text-transform: none;
-    width: 94%;
-    display: block;
+    // width: 94%;
+    // display: block;
 
     &.mobile_main_color {
       .mobile-btn(#fff, @mainColorDarker);
+
+      &.dark_text {
+        .mobile-btn(#fff, @mainColorDarker);
+      }
     }
     &.mobile_light {
       .mobile-btn(@mainColorDarker, #fff);
@@ -319,7 +329,8 @@ button,
   }
   @media @medium {
     &.has-ic {
-      padding: 16px 20px 16px 52px;
+      //padding: 16px 20px 16px 52px;
+      padding: 16px 25px 16px 57px;
     }
     .ic {
       position: absolute;

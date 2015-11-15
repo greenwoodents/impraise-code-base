@@ -37,12 +37,13 @@
 .large-wrap,
 .small-wrap,
 .wrap-600,
+.wrap-700,
 .wrap-800,
 .wrap-900,
 .wrap-1000,
 .wrap-1200 {
   width: 100%;
-  padding: 0 4%;
+  padding: 0 24px;
 
   &:after {
     content:'';
@@ -69,6 +70,17 @@
     padding: 0;
   }
 }
+
+
+.wrap-700 {
+  @media @medium {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
+
 
 .wrap-1000 {
   @media @1000 {

@@ -1,0 +1,101 @@
+<!-- <div class="breadcrumb" role="navigation" aria-label="Breadcrumbs">
+    <div class="_cont">
+        <ol>
+            <li><a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a></li>
+  {% if template contains 'product' %}
+
+    {% if collection %}
+      {% if collection.handle %}
+        {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+        <li>{{ collection.title | link_to: url }}</li>
+      {% endif %}
+    {% endif %}
+    <li>{{ product.title }}</li>
+
+  {% elsif template contains 'collection' and collection.handle %}
+
+    {% if current_tags %}
+      {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+      <li><a href="{{ page.url }}">{{ page_title }}</a></li>
+      <li>{{ current_tags | join: " + " }}</li>
+    {% else %}
+      <li>{{ page_title }}</li>
+    {% endif %}
+
+  {% elsif template == 'blog' %}
+
+    {% if current_tags %}
+      <li>{{ blog.title | link_to: blog.url }}</li>
+      <li>{{ current_tags | join: " + " }}</li>
+    {% else %}
+    <li>{{ blog.title }}</li>
+    {% endif %}
+
+  {% elsif template == 'article' %}
+
+    <li>{{ blog.title | link_to: blog.url }}</li>
+    <li>{{ article.title }}</li>
+
+  {% elsif template contains 'page' %}
+
+   <li>{{ page.title }}</li>
+
+  {% else %}
+
+   <li>{{ page_title }}</li>
+
+  {% endif %}
+        </ol>
+    </div>
+</div> -->
+
+
+<div class="breadcrumb" role="navigation" aria-label="Breadcrumbs">
+    <div class="_cont">
+        <ol>
+            <li><a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a></li>
+  {% if template contains 'product' %}
+
+    {% if collection %}
+      {% for c in product.collections %}
+        <li><a href="/collections/{{ c.handle }}">{{ c.title | escape }}</a></li>
+    {% endfor %}
+    {% endif %}
+  <li>{{ product.title }}</li>
+
+  {% elsif template contains 'collection' and collection.handle %}
+
+   {% if current_tags %}
+      {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+      <li><a href="{{ page.url }}">{{ page_title }}</a></li>
+      <li>{{ current_tags | join: " + " }}</li>
+    {% else %}
+      <li>{{ page_title }}</li>
+    {% endif %}
+
+  {% elsif template == 'blog' %}
+
+    {% if current_tags %}
+      <li>{{ blog.title | link_to: blog.url }}</li>
+      <li>{{ current_tags | join: " + " }}</li>
+    {% else %}
+    <li>{{ blog.title }}</li>
+    {% endif %}
+
+  {% elsif template == 'article' %}
+
+    <li>{{ blog.title | link_to: blog.url }}</li>
+    <li>{{ article.title }}</li>
+
+  {% elsif template contains 'page' %}
+
+   <li>{{ page.title }}</li>
+
+  {% else %}
+
+   <li>{{ page_title }}</li>
+
+  {% endif %}
+        </ol>
+    </div>
+</div>

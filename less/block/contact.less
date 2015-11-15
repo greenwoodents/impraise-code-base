@@ -1,5 +1,7 @@
 .contact {
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+
   @media @small {
     padding: 0 3%;
     width: 100%;
@@ -8,6 +10,33 @@
     width: 600px;
     margin: 0 auto;
     padding-bottom: 80px;
+
+    &:after {
+      content: '';
+      width: 416px;
+      height: 457px;
+
+      background: url(../assets/contact_team_left.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      position: absolute;
+      bottom: -64px;
+      left: -416px;
+    }
+    &:before {
+      content: '';
+      width: 419px;
+      height: 434px;
+
+      background: url(../assets/contact_team_right.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      position: absolute;
+      bottom: -64px;
+      right: -419px;
+    }
   }
 
   h2 {
@@ -22,9 +51,15 @@
   .contact_box {
     width: 50%;
     float: left;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     @media @medium {
       padding-left: 50px;
+    }
+
+    &.email-box {
+      width: 100%;
+      padding: 0;
+      text-align: center;
     }
   }
 
@@ -58,6 +93,11 @@
     line-height: 20px;
     padding-left: 34px;
     position: relative;
+    display: inline-block;
+
+    &.hide {
+      position: absolute !important;
+    }
 
     &:before {
       content: '';
@@ -93,6 +133,12 @@
 
       @media @small {
         top: 10px;
+      }
+    }
+
+    &.email {
+      @media @medium {
+        margin-bottom: 25px;
       }
     }
 

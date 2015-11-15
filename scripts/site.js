@@ -184,12 +184,12 @@
     reader line
   */
   function readerLine() {
-    if(document.querySelector('.footer') === null) {
+    if(!(document.querySelector('.js-footer') && document.querySelector('PROGRESS'))) {
       return false;
     }
     var winHeight = window.innerHeight,
         docHeight = document.body.clientHeight,
-        footer = document.querySelector('.footer').offsetHeight,
+        footer = document.querySelector('.js-footer').offsetHeight,
         progressBar = document.querySelector('PROGRESS'),
         max, value;
     /* Set the max scrollable area */
@@ -205,6 +205,15 @@
   /*
     Menu open listener
   */
+
+   var site = document.querySelector('.site');
+  site.addEventListener('click', function(e){
+    var body = document.body;
+    if( body.classList.contains('side_menu_open') && e.target.nodeName === 'DIV'){
+      document.body.classList.toggle('side_menu_open');
+    }
+  });
+
   [].forEach.call(document.querySelectorAll('.header_navigation_more > p'), function(el,i,a) {
     var header = document.querySelector('.header');
     el.addEventListener('click', function(){
@@ -222,7 +231,10 @@
     closeSideMenu.addEventListener('click', function() {
       body.classList.toggle('side_menu_open');
     });
+
   });
+
+
 
   /*
     Modal open listeners
@@ -266,11 +278,24 @@
   [].forEach.call(document.querySelectorAll('.js-video'), function(el,i,a) {
     var inject = document.querySelector('.overlays');
     var url = el.getAttribute('data-video');
+    var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+    var r = url.match(rx);
+    console.log(r);
+
+    if(r === null){
+      r = url;
+    } else {
+      r = r[1];
+    }
+
+
+
     el.addEventListener('click', function(){
       inject.innerHTML  =     '<div class="overlay">'+
                                 '<div class="overlay_close"><svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7 14 1.41z" fill="#FFF" fill-rule="evenodd"/></svg></div>'+
                                 '<div class="overlay_container">'+
-                                  '<iframe id="s9zzxkFbr8A-placeholder" frameborder="0" allowfullscreen="1" title="YouTube video player" width="1000" height="562" src="https://www.youtube.com/embed/'+url+'?autoplay=1&amp;rel=0&amp;showinfo=0&amp;theme=light&amp;color=white&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fwww.impraise.com"></iframe>'+
+                                  '<iframe id="s9zzxkFbr8A-placeholder" frameborder="0" allowfullscreen="1" title="YouTube video player" width="1000" height="562" src="https://www.youtube.com/embed/'+r+'?autoplay=1&amp;rel=0&amp;showinfo=0&amp;theme=light&amp;color=white&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fwww.impraise.com"></iframe>'+
                                 '</div>'+
                               '</div>'
 
@@ -343,161 +368,6 @@
   };
   verification();
 
-  /*
-    Email Sender for modal
-  */
-  // (function() {
-  //   var form, inputs , sendButton, web;
-
-  //   var init = function() {
-  //     form = document.querySelector('.modal_schedule_demo_main_form'),
-  //     inputs = form.querySelectorAll('input'),
-  //     sendButton = form.querySelector('.action-button'),
-  //     web = document.location.origin;
-
-  //     if (sendButton) {
-  //       //Send listener
-  //       sendButton.addEventListener('click', function(e) {
-  //         e.preventDefault();
-  //         sendEmail();
-  //       }, false);
-  //     };
-  //   };
-
-  //   var isValidEmail = function(email) {
-  //     var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-  //     return expr.test(email);
-  //   };
-
-  //   var escapeHtml = function(str) {
-  //     var div = document.createElement('div');
-  //     div.appendChild(document.createTextNode(str));
-  //     return div.innerHTML;
-  //   };
-
-
-  //   var constructEmail = function(data) {
-  //     var html = "<h2>"+ escapeHtml(data.name) +
-  //                " Want to scheadule a demo.</h2>" +
-  //                "<p>Information:</p>" +
-  //                "<ul>"+
-  //                "<li>Name: "+ escapeHtml(data.name) +"</li>" +
-  //                "<li>Email: "+ escapeHtml(data.contact) +"</li>" +
-  //                "<li>Phone: "+ escapeHtml(data.phone) +"</li>" +
-  //                "<li>Organization: "+ escapeHtml(data.organization) +"</li>" +
-  //                "</ul>"+
-  //                "<p>Message:<br>"+ escapeHtml(data.message) +
-  //                "</p><p style='font-size: 10px;color: grey;margin-top: 30px;display: block;'>Sended from "+
-  //                escapeHtml(web) +"</p>";
-  //                console.log(html);
-  //     var text =
-  //     {
-  //       "key": "XTxJRVNYRCrJMh-n_8Ga2g",
-  //       "message": {
-  //         "html": html,
-  //         "text": "Schedule a demo request",
-  //         "subject": "Schedule a demo request",
-  //         "from_email": data.contact,
-  //         "from_name": data.name,
-  //         "to": [
-  //             {
-  //                 "email": "support@impraise.com",
-  //                 "name": "Support at Impraise",
-  //                 "type": "to"
-  //             }
-  //         ],
-  //         "headers": {
-  //             "Reply-To": data.contact
-  //         },
-  //         "important": false,
-  //         "track_opens": null,
-  //         "track_clicks": null,
-  //         "auto_text": null,
-  //         "auto_html": null,
-  //         "inline_css": null,
-  //         "url_strip_qs": null,
-  //         "preserve_recipients": null,
-  //         "view_content_link": null,
-  //         "tracking_domain": null,
-  //         "signing_domain": null,
-  //         "return_path_domain": null,
-  //         "merge": true,
-  //         "merge_language": "mailchimp"
-  //       },
-  //       "async": false,
-  //       "ip_pool": "Main Pool"
-  //     };
-
-  //     return text;
-  //   }
-
-  //   var sendEmail = function() {
-  //     var stop = false;
-  //     var data = {};
-  //     var sended = false;
-
-  //     if(sended === true){
-  //       return false;
-  //     }
-
-  //     [].forEach.call(inputs, function(input, i, array) {
-  //       input.addEventListener('focus', function(event) {
-  //        event.target.parentNode.classList.remove('is-invalid');
-  //       });
-  //     });
-
-  //     [].forEach.call(inputs, function(input, i, array) {
-  //       parent = input.parentNode;
-  //       parent.classList.remove('is-ok');
-  //       parent.classList.remove('is-invalid');
-
-  //       if(input.value == '') {
-  //         parent.classList.add('is-invalid');
-  //         stop = true;
-
-  //       } else {
-  //         if (input.name === "contact") {
-  //           if (isValidEmail(input.value) === false ) {
-  //             parent.classList.add('is-invalid');
-  //             stop = true;
-  //           } else {
-  //             parent.classList.add('is-ok');
-  //             data[input.name] = input.value;
-  //           }
-  //         } else if (input.name) {
-  //           parent.classList.add('is-ok');
-  //           data[input.name] = input.value;
-  //         }
-  //       }
-  //     });
-
-  //     var text = constructEmail(data);
-  //     var btn = document.querySelector('.js-form-button');
-  //     // construct an HTTP request
-  //     var xhr = new XMLHttpRequest();
-  //     xhr.open('POST', 'https://mandrillapp.com/api/1.0/messages/send.json', true);
-  //     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-
-  //     xhr.onreadystatechange = function() {
-  //       console.log(xhr);
-  //       if (xhr.readyState==4 && xhr.status==200) {
-  //         btn.classList.remove('loading');
-  //         btn.classList.add('done');
-  //         sended = true;
-  //       }
-  //     }
-  //     // send the collected data as JSON
-  //     if (!(stop)) {
-  //       console.log('sending');
-  //       console.log(text);
-  //       xhr.send(JSON.stringify(text));
-  //       btn.classList.add('loading');
-  //     }
-  //   }
-  //   init();
-  // })();
-  //
-  //
 
   /*
     Share buttons affix
@@ -507,22 +377,21 @@
       return;
     }
     var jsAboutUsNav = document.querySelector('.social_block');
-    var hp = document.querySelector('.page');
+    var page = document.querySelector('.page');
 
     if(mq.matches){
       jsAboutUsNav.style.cssText = null;
     }
 
-    if(jsAboutUsNav == undefined || hp == true || mq.matches){
+    if(jsAboutUsNav == undefined || page == true || mq.matches){
       return false
     }
 
     var footer = document.querySelector('.email_signup'),
         elStyle = jsAboutUsNav.style,
         scrollTop = window.pageYOffset,
-        a = scrollTop - document.querySelector('.article_header').offsetHeight,
-        b = scrollTop - document.querySelector('.post_body_content').offsetHeight - 375;
-
+        a = scrollTop - document.querySelector('.js-affix-header').offsetHeight,
+        b = scrollTop - document.querySelector('.js-affix-body').offsetHeight - 375;
 
     if(a > 0 && b < 0){
       elStyle.cssText = null;
@@ -780,8 +649,6 @@
         }
       });
     };
-
-
     init();
   };
   Pricing();
@@ -801,8 +668,13 @@
     proceed = function(resp) {
       [].forEach.call(states, function(s,i,a) {
         if(s.trim() == resp.trim()){
-          document.querySelector('.us-adress').classList.add('hide');
-          document.querySelector('.eu-adress').classList.remove('hide');
+          [].forEach.call(document.querySelectorAll('.us-adress'), function(el,i,a) {
+            el.classList.add('hide');
+          });
+
+          [].forEach.call(document.querySelectorAll('.eu-adress'), function(el,i,a) {
+            el.classList.remove('hide');
+          });
         }
       });
     };
@@ -826,7 +698,6 @@
     [].forEach.call(document.querySelectorAll('.masonry_selector_item'), function(el,i,a) {
       el.addEventListener('click', function(e){
         var filter = e.target.getAttribute('data-filter');
-        console.log(filter, document.querySelector('.masonry_selector'));
         document.querySelector('.masonry_selector_title').textContent = e.target.textContent;
         document.querySelector('.masonry_selector').classList.remove('active');
 
@@ -835,10 +706,23 @@
     });
 
     document.querySelector('.masonry_selector_title').addEventListener('click', function(e){
-      console.log('clikcity click');
       document.querySelector('.masonry_selector').classList.add('active');
     })
-
   };
   masonry();
+
+
+
+  [].forEach.call(document.querySelectorAll('.js-check-articles'), function(el,i,a) {
+    var id = document.querySelector('.js-check-articles-main').getAttribute('data-item-id');
+
+    if(id){
+      var item = document.getElementById(id);
+      console.log(item);
+
+      if(item){
+        item.remove();
+      }
+    }
+  });
 }());

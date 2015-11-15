@@ -1,3 +1,44 @@
 .product-page {
   overflow: hidden;
 }
+
+
+.product-box {
+  padding: 22px 30px;
+
+  @media @small {
+    padding: 0 4%;
+  }
+
+  h3 {
+    font-size: 18px;
+    color: #30393F;
+    line-height: 28px;
+    margin-bottom: 9px;
+  }
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    color: #30393F;
+  }
+}
+
+
+
+
+
+
+.product-boxes {
+  @media only screen and (min-width: 720px), only screen and (max-width: 1215px) {
+    .image-container {
+      visibility: hidden;
+      opacity: 0;
+      display: none;
+    }
+
+    .enlarge-on-medium {
+      width: 100%;
+    }
+  }
+
+}

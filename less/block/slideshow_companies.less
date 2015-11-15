@@ -2,7 +2,7 @@
   overflow: hidden;
   clear: both;
   display: block;
-
+}
 
   .slideshow_companies_title {
     font-size: 12px;
@@ -38,16 +38,11 @@
       display: none;
       float: left;
       &:nth-child(2),
-      &:nth-child(1) {
+      &:nth-child(3) {
         display: block;
         padding: 0 2%;
         margin-bottom: 25px;
       }
-
-      &:nth-child(1) .slideshow_companies_logo {
-            background-position: right;
-      }
-
     }
   }
   .slideshow_companies_logo {
@@ -58,7 +53,7 @@
     height: 100%;
     transition: 300ms;
     filter: grayscale(100%);
-
+    background-position: center;
     width: 80%;
     margin: auto;
 
@@ -111,7 +106,6 @@
         }
       }
     }
-
   }
 
   .slideshow_companies_logos_background {
@@ -134,9 +128,7 @@
     @media @medium {
       background-color: #E8E8E6;
     }
-
   }
-}
 
 
 

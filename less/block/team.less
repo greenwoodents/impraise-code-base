@@ -1,5 +1,30 @@
 .team-page {
   overflow: hidden;
+
+
+  @media @small {
+    .header_content_wrap {
+      text-align: center;
+
+      blockquote {
+
+        font-size: 24px;
+        color: #FFFFFF;
+        line-height: 36px;
+        text-shadow: 0px 1px 6px #30393F;
+        font-style: normal;
+        margin: 0;
+        font-weight: 700;
+      }
+
+      .btn {
+        margin-top: 50px;
+      }
+    }
+    .header_content {
+      padding-bottom: 45px;
+    }
+  }
 }
 
 .team {
@@ -8,15 +33,17 @@
     overflow: hidden;
     position: relative;
     height: 320px;
+    margin-bottom: 0;
 
     @media @medium {
       width: 33.33%;
       float: left;
       height: 400px;
       padding: 0 7px;
+      margin-bottom: 12px;
     }
 
-    margin-bottom: 12px;
+
 
     &:hover {
 
@@ -249,8 +276,10 @@
       font-family: @cooperLight;
       font-size: 28px;
       color: #FFFFFF;
-      line-height: 32px;
+      line-height: 38px;
       padding: 80px 64px 0;
+      font-style: normal;
+
     }
   }
 
@@ -258,16 +287,28 @@
 
   .cart_person {
     @media @medium {
-      margin-top: 50px;
+      margin-top: 30px;
+      padding-left: 83px;
+      padding-top: 16px;
     }
     @media @small {
       padding-left: 0;
       text-align: center;
     }
   }
+
+
   .cart_person_image {
     background-color: #FFD7A3;
+    width: 74px;
+    height: 74px;
+
     .avatar {
+      width: 66px;
+      height: 66px;
+      bottom: 4px;
+      left: 4px;
+      border-color: #fff;
       border-color: #FF9E21;
     }
     @media @small {
@@ -338,6 +379,29 @@
   p {
     opacity: 0.6;
   }
+
+  @media @small {
+    .sqs-gallery-block-grid.sqs-gallery-thumbnails-per-row-3 .sqs-gallery-design-grid-slide {
+      width: 50% !important;
+    }
+
+    .sqs-gallery-block-grid .sqs-gallery-design-grid-slide .margin-wrapper {
+      margin-right: 0 !important;
+      margin-bottom: 0 !important;
+    }
+  }
+
+
+  @media @medium {
+    img {
+      transition: 300ms;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+
 }
 
 .instagram_bcg_box {

@@ -1,5 +1,5 @@
 .wrote-about_large_wrap {
-padding-bottom: 44px;
+  padding-bottom: 44px;
 }
 
 .wrote-about {
@@ -14,6 +14,10 @@ padding-bottom: 44px;
     .wclear {
       overflow: hidden;
     }
+  }
+
+  @media @small {
+    padding-bottom: 0px;
   }
 
 
@@ -95,13 +99,18 @@ padding-bottom: 44px;
     transition: 300ms;
 
     @media @small {
+      position: relative;
       text-align: center;
       background: #FFFFFF;
       box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 7px 0px rgba(0,0,0,0.26);
       border-radius: 3px;
       width: 94%;
       margin: 0 auto;
-      padding: 33px 3% 23px;
+      padding: 65px 3% 23px;
+
+      a {
+        position: initial;
+      }
     }
 
     @media @medium {
@@ -125,6 +134,8 @@ padding-bottom: 44px;
     margin-left: 20px;
   }
 
+
+
   .wrote-about_item_content {
     font-size: 16px;
     color: #30393F;
@@ -135,7 +146,6 @@ padding-bottom: 44px;
 
   .wrote-about_item_content_meta {
     p {
-      /* by Catherine Shu: */
       opacity: 0.75;
       font-size: 12px;
       color: #657684;
@@ -156,7 +166,27 @@ padding-bottom: 44px;
       max-width: 350px;
       float: none;
       margin: 0 auto;
+      padding-left: 25px;
+
+      .wrote-about_item_logo {
+        position: absolute !important;
+        top: 22px !important;
+        left: 50%;
+        transform: translate(-50%);
+        width: 35%;
+      }
     }
+
+    @media @medium {
+      padding-bottom: 40px;
+    }
+
+
+    .clearfix {
+      display: block;
+      overflow: hidden;
+    }
+
 
     .wrote-about_item_line {
       opacity: 0.1;
@@ -179,15 +209,42 @@ padding-bottom: 44px;
         line-height: 28px;
         font-family: @openSans;
       }
+
+
     }
 
     .cart_person {
       padding-left: 90px;
+
+      @media @medium {
+        width: 65%;
+        padding-top: 0;
+        padding-right: 10px;
+      }
+
+      @media @small {
+        padding-bottom: 17px;
+        font-size: 16px;
+        padding-top: 3px;
+      }
     }
 
     .cart_person_name {
       color: #30393F;
-          margin-top: 8px;
+      margin-top: 8px;
+
+      @media @small {
+        font-size: 14px;
+        color: #657684;
+        line-height: 20px;
+      }
+
+      .cart_person_position {
+        opacity: 0.75;
+        font-size: 12px;
+        color: #657684;
+        line-height: 16px;
+      }
     }
 
     .cart_person_image {
@@ -200,10 +257,24 @@ padding-bottom: 44px;
         left: 4px;
         border-color: #fff;
       }
+
+      @media @small {
+        margin-left: 30px;
+        margin-top: 5px;
+        width: 46px;
+        height: 46px;
+
+        .avatar {
+          width: 42px;
+          height: 42px;
+          bottom: 2px;
+          left: 2px;
+        }
+      }
     }
 
     .learn_more_link {
-      margin-top: 15px;
+      margin-top: -10px;
       font-weight: 700;
     }
 
@@ -213,6 +284,10 @@ padding-bottom: 44px;
         top: 13px;
         margin-left: 0;
         margin-right: 30px;
+        width: 35%;
+        @media @medium {
+          margin-right: 0;
+        }
       }
   }
 }

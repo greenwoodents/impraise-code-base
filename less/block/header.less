@@ -247,23 +247,35 @@
 
   @media @small {
     padding-top: 100px;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 210px;
+      opacity: .5;
+      background-image: linear-gradient(-170deg, #FFFFFF 0%, rgba(255,255,255,0.00) 77%);
+      background-image: linear-gradient(-180deg, #FFFFFF 2%, #FFFFFF 81%, rgba(255,255,255,0.00) 100%);
+    }
   }
 
   @media @medium {
     height: 647px;
-    padding: 8% 2% 0;
+    padding: 140px 2% 0;
   }
 
   @media @large {
-    padding: 8% 2% 0;
-    padding-top: 127px;
+    padding: 140px 2% 0;
   }
   background-color: #E8E8E6;
   text-align: center;
 
   .homepage_header_content_wrap {
     position: relative;
-
+    z-index: 1;
     @media @1000 {
       width: 990px;
       padding-left: 0;
@@ -284,6 +296,8 @@
     }
   }
 
+
+
   .homepage_header_content_title {
     position: relative;
 
@@ -293,11 +307,25 @@
         margin-bottom: 22px;
       }
       margin-bottom: 1px;
+
+      @media @small {
+        font-weight: 700;
+        font-size: 24px;
+        color: #30393F;
+        line-height: 36px;
+        padding-top: 0px;
+      }
+    }
+
+    @media @medium {
+      width: 55%;
     }
   }
+
   .homepage_header_content_image_wrap {
     @media @medium {
       float: right;
+      width: 45%;
     }
 
   }
@@ -314,6 +342,7 @@
       background-size: contain;
     }
   }
+
 
   .homepage_header_content_under_image {
     display: inline-block;
@@ -517,17 +546,17 @@
   }
 }
 .header-product_image {
-  background-image: url(../assets/product_mac@2x.png);
-  width: 639px;
-  height: 381px;
+  background-image: url(../assets/product/bcg.png);
+  width: 734px;
+  height: 443px;
   background-repeat: no-repeat;
   background-position: bottom center;
   background-size: contain;
   margin: 0 auto;
   position: absolute;
   left: 50%;
-  bottom: 0;
-  margin-left: -320px;
+  bottom: -80px;
+  margin-left: -367px;
 
   @media @small {
     width: 90%;
@@ -577,6 +606,12 @@
       background-size: contain;
       background-repeat: no-repeat;
       margin: 0 auto;
+
+      a {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
     }
   }
 
@@ -585,7 +620,7 @@
 
     a {
       font-size: 12px;
-      color: #FFA837;
+      color: #FFA837 !important;
       line-height: 16px;
       font-weight: 700;
       text-transform: uppercase;
@@ -743,6 +778,11 @@
           fill: #657684;
         }
       }
+      @media @small {
+        .ic path {
+          fill: @mainColor;
+        }
+      }
     }
 
     .header_navigation--center {
@@ -838,6 +878,14 @@
       fill: #657684;
     }
   }
+
+  @media @small {
+    .ic {
+      path {
+        fill: @mainColor;
+      }
+    }
+  }
 }
 
 .header_navigation_wrap {
@@ -880,20 +928,30 @@
     }
 
     .ic path {
-        fill: #fff;
+      fill: #fff;
     }
-
-    &:hover {
-      color: #fff;
-      opacity: 1 !important;
-      a {
-        color: #fff;
-      }
-
+    @media @small {
       .ic path {
-        fill: #fff;
+        fill: @mainColor;
       }
     }
+
+    @media @medium {
+
+      &:hover {
+        color: #fff;
+        opacity: 1 !important;
+        a {
+          color: #fff;
+        }
+
+        .ic path {
+          fill: #fff;
+        }
+      }
+
+    }
+
   }
 
   .header_navigation_item.special {
@@ -1086,20 +1144,28 @@
     .header_content-basic_background {
       left: 50%;
       min-width: 1500px;
+      max-width: 1500px;
       transform: translateX(-50%);
     }
+
+    .large-wrap {
+      p {
+        opacity: .6;
+        padding: 24px 90px 0;
+      }
+    }
+  }
+
+  .header_content-basic_background  {
+     img {
+        position: absolute !important;
+        top: initial  !important;
+        bottom: 0;
+     }
   }
 
   @media @small {
     min-height: 420px;
-
-    .header_content-basic_background  {
-       img {
-          position: absolute !important;
-          top: initial  !important;
-          bottom: 0;
-       }
-    }
   }
 }
 
@@ -1113,6 +1179,26 @@
 }
 
 
+
+
+
+//////////////////
+//Header customer
+//
+.header-customer {
+  .header_navigation_main_wrap {
+    overflow: visible;
+  }
+  .header_logo_wrap_mobile {
+    top: 20px;
+    position: relative;
+  }
+  @media @small {
+    &.header .header_wrap {
+      padding: 0;
+    }
+  }
+}
 
 
 

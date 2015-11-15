@@ -29,6 +29,10 @@ html {
   //overflow: hidden;
 }
 
+.posrel {
+  position: relative;
+}
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
@@ -38,6 +42,10 @@ a {
   transition: 300ms;
   outline: 0;
   color: @mainColor;
+
+  &:hover {
+    color: @mainColorDarker;
+  }
 }
 a:hover, a:active, a:focus {
   outline: 0;
@@ -46,6 +54,7 @@ a:hover, a:active, a:focus {
 a:active {
   top: 2px;
 }
+
 
 .content-wrapper-clear{
   width:  100%;
@@ -165,19 +174,29 @@ input {
 }
 
 
+//padding top
 .pt {
   padding-top: 18px;
 }
+
+//padding bottom
 .pb {
   padding-bottom: 35px;
 }
 
+// Margin bottom
 .mb {
   margin-bottom: 100px;
 
   @media @small {
     margin-bottom: 50px;
   }
+}
+
+//No padding
+.np {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .mobile-center-text {
@@ -190,4 +209,6 @@ input {
     margin-right: auto;
   }
 }
+
+
 

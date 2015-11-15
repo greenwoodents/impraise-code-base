@@ -141,7 +141,7 @@
 
 .article_customers {
   position: relative;
-
+  overflow: hidden;
   @media @small {
 
   }
@@ -178,9 +178,6 @@
 
   @media @medium {
     height: 700px;
-    .article_header_title_wrap {
-      width: 990px;
-    }
   }
 
 
@@ -190,7 +187,7 @@
 
   .article_header_title_wrap {
     .half {
-      width: 50%;
+      width: 60%;
       display: block;
       text-align: left;
     }
@@ -200,10 +197,10 @@
     font-size: 16px;
     color: #30393F;
     line-height: 24px;
-    font-weight: 800;
-    margin-top: -19px;
     margin-bottom: 28px;
     position: relative;
+    font-weight: 700;
+    margin-top: -10px;
     @media @small {
       margin-top: -2px;
       width: 100%;
@@ -286,16 +283,28 @@
 
 .article_customers_item {
   overflow: hidden;
+
   @media @medium {
     height: 850px;
+    padding-top: 240px;
   }
+
+  @media @small {
+    margin-bottom: 30px;
+    padding-bottom: 0;
+
+    .article_header_title_wrap {
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+  }
+
   &:after {
     content: '';
     width: 100%;
     height: 100%;
     opacity: .7;
     background-color: #292C33;
-
     position: absolute;
     top: 0;
     right: 0;
@@ -312,7 +321,6 @@
   .article_header_title_wrap {
      z-index: 10;
      text-align: center;
-
     .half {
       text-align: center;
     }
@@ -331,6 +339,56 @@
       opacity: 1;
       color: #90ADC5;
       font-size: 18px;
+    }
+
+    @media @small {
+      opacity: 0.6;
+      font-size: 16px;
+      color: #FFFFFF;
+      line-height: 24px;
+      margin-top: 2px;
+
+
+      .article_header_meta_person_position {
+        opacity: 1;
+        font-size: 16px;
+        color: #FFFFFF;
+        line-height: 24px;
+        display: initial;
+      }
+    }
+  }
+
+  .article_header_quote_box {
+    h1 {
+      color: @mainColor;
+    }
+    p {
+      /* people found feedbac: */
+      opacity: 0.6;
+      font-size: 16px;
+      color: #FFFFFF;
+      line-height: 24px;
+    }
+
+    @media @small {
+      background-color: #30393F;
+      position: relative;
+      margin-top: 100px;
+      padding-bottom: 20px;
+
+      .col {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        color: #FF904D;
+        font-size: 24px;
+        line-height: 36px;
+        font-weight: 800;
+        padding-bottom: 8px;
+      }
     }
   }
 
