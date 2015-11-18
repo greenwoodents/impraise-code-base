@@ -44,25 +44,43 @@
     }
 
 
-
-    &:hover {
-
-      .team_person_description {
-        transform: translateY(40px);
-      }
-
-      .team_person_description_des {
-        opacity: 1;
-        visibility: visible;
-      }
-      .team_person_image:after  {
-        background-color: #30393F;
-        opacity: .8;
-      }
-      .team_person_description_hr {
-        opacity: 1;
+    @media @medium {
+      &:hover {
+        .team_person_description {
+          transform: translateY(40px);
+        }
+        .team_person_description_des {
+          opacity: 1;
+          visibility: visible;
+        }
+        .team_person_image:after  {
+          background-color: #30393F;
+          opacity: .8;
+        }
+        .team_person_description_hr {
+          opacity: 1;
+        }
       }
     }
+    @media @small {
+      &.show {
+        .team_person_description {
+          transform: translateY(40px);
+        }
+        .team_person_description_des {
+          opacity: 1;
+          visibility: visible;
+        }
+        .team_person_image:after  {
+          background-color: #30393F;
+          opacity: .8;
+        }
+        .team_person_description_hr {
+          opacity: 1;
+        }
+      }
+    }
+
   }
 
   .team_person_image {

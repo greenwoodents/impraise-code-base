@@ -90,6 +90,7 @@
    function afterLoad() {
      readerLine();
      slideshow();
+     socialCounting();
    };
 
   window.addEventListener('load', afterLoad);
@@ -98,11 +99,6 @@
  /**
   * scroll and resize events
   */
-
-
-
-
-
   function infiniteScroll(parent, post) {
     if(!(document.querySelector('.js-blog'))){
       return;
@@ -171,14 +167,14 @@
       }
     };
   };
-
-
   // Call the function on domready.
   Y.use('node', function() {
     Y.on('domready', function() {
       infiniteScroll('.homepage','.article-list_item');
     });
   });
+
+
 
   /*
     reader line
@@ -205,8 +201,7 @@
   /*
     Menu open listener
   */
-
-   var site = document.querySelector('.site');
+  var site = document.querySelector('.site');
   site.addEventListener('click', function(e){
     var body = document.body;
     if( body.classList.contains('side_menu_open') && e.target.nodeName === 'DIV'){
@@ -231,7 +226,6 @@
     closeSideMenu.addEventListener('click', function() {
       body.classList.toggle('side_menu_open');
     });
-
   });
 
 
@@ -274,14 +268,20 @@
   });
 
 
+  /* Video opener
 
+      Making video overlay from data-video atribute on js-video class.
+
+      Curently supporting players:
+      Youtube.com
+
+  */
   [].forEach.call(document.querySelectorAll('.js-video'), function(el,i,a) {
     var inject = document.querySelector('.overlays');
     var url = el.getAttribute('data-video');
     var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
 
     var r = url.match(rx);
-    console.log(r);
 
     if(r === null){
       r = url;
@@ -411,6 +411,30 @@
     };
   };
 
+  /*
+    Share buttons counter display.
+
+   */
+   function socialCounting() {
+    [].forEach.call(document.querySelectorAll('.social_block'), function(el,i,a) {
+      Socialcount.all(function (counts) {
+        if(counts.twitter > 0){
+          el.querySelector('.twitter .count') = counts.twitter;
+        }
+        if(counts.facebook > 0){
+          el.querySelector('.facebook .count') = counts.facebook;
+        }
+        if(counts.google > 0){
+          el.querySelector('.google .count') = counts.google;
+        }
+        if(counts.linkedin > 0){
+          el.querySelector('.linkedin .count') = counts.linkedin;
+        }
+      });
+    });
+   };
+
+
 
 
   /*
@@ -451,17 +475,25 @@
       Function for displaying slide number wich is put as first and only argument.
     */
     function display(slide) {
-      var position = positioned;
+      // var position = positioned;
 
-      if(slide > 0){
-        position = (widthOfScreen * slide) * -1;
-      } else {
-        position = 0;
-      }
+      // if(slide > 0){
+      //   position = (widthOfScreen * slide) * -1;
+      // } else {
+      //   position = 0;
+      // }
 
-      wrap.style.transform = 'translateX('+ position +'px)';
-      wrap.style.webkitTransform  = 'translateX('+ position +'px)';
-      displayed = slide;
+      // wrap.style.transform = 'translateX('+ position +'px)';
+      // wrap.style.webkitTransform  = 'translateX('+ position +'px)';
+      // displayed = slide;
+      //
+      [].forEach.call(item, function(el,i,a) {
+        if(slide === i){
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
 
       [].forEach.call(buttons, function(el,i,a) {
         if(i === slide){
@@ -482,7 +514,6 @@
         [].forEach.call(item, function(el,i,a) {
           el.style.width = "94%";
         });
-
       } else {
         wrap.style.width = widthOfWrap + "px";
         [].forEach.call(item, function(el,i,a) {
@@ -491,7 +522,6 @@
       }
 
       wrap.style.transition = "0ms";
-
       display(displayed);
 
       setTimeout(timeout, 200);
@@ -712,17 +742,25 @@
   masonry();
 
 
-
+  /* Function for checking if is displayed same post in "post in" area */
   [].forEach.call(document.querySelectorAll('.js-check-articles'), function(el,i,a) {
     var id = document.querySelector('.js-check-articles-main').getAttribute('data-item-id');
 
     if(id){
       var item = document.getElementById(id);
-      console.log(item);
 
       if(item){
         item.remove();
       }
     }
+  });
+
+
+  /* This function opening description on team member after clicking their name */
+  [].forEach.call(document.querySelectorAll('.team_person_description_name'), function(el,i,a) {
+    var par = el.parentNode.parentNode;
+    el.addEventListener('click', function(e){
+      par.classList.toggle('show');
+    });
   });
 }());

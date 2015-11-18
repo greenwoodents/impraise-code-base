@@ -142,17 +142,15 @@
 .article_customers {
   position: relative;
   overflow: hidden;
-  @media @small {
-
-  }
 
   q {
     quotes: "\201C" "\201D" "\2018" "\2019";
-    font-family: CooperHewitt-Light;
+    font-family: @cooperLight;
     font-size: 64px;
     color: #30393F;
     line-height: 90px;
     position: relative;
+
 
     @media @small {
       font-weight: 700;
@@ -178,6 +176,11 @@
 
   @media @medium {
     height: 700px;
+    padding-left: 0;
+
+    .btn {
+      margin-left: -4px;
+    }
   }
 
 

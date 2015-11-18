@@ -151,10 +151,21 @@
   }
 
   @media @medium {
+    transition: 300ms;
     width: 100%;
     background-color: @darkColor;
     height: 425px;
+    opacity: 1;
+    visibility: visible;
+
+    &.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
   }
+
+
+
 }
 
 .slideshow_companies_slide:first-child {
@@ -379,9 +390,13 @@
     overflow: hidden;
     position: relative;
     z-index: -1;
+    height: 100%;
+
     .slideshow_companies_slide {
       width: 50%;
-      float: left;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   }
 }
@@ -397,4 +412,5 @@
     padding: 10px 0;
   }
 }
+
 
