@@ -40,6 +40,17 @@
       background-color: #353E44;
     }
 
+    a {
+      color: #fff;
+      &:hover {
+        color: #fff;
+      }
+
+      &:active {
+        top: 0;
+      }
+    }
+
 
     @media @medium {
       width: 33.33%;
@@ -82,7 +93,7 @@
     width: 50px;
     height: 50px;
     position: absolute;
-    top: 0;
+    top: initial;
     left: -60px;
   }
   .btn {

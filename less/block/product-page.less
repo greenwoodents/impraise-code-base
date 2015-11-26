@@ -1,5 +1,10 @@
 .product-page {
   overflow: hidden;
+
+  .revers-mobile {
+    display: flex;
+    flex-wrap: wrap-reverse;
+  }
 }
 
 
@@ -29,7 +34,7 @@
 
 
 .product-boxes {
-  @media only screen and (min-width: 720px), only screen and (max-width: 1215px) {
+  @media only screen and (min-width: 720px) and (max-width: 1215px) {
     .image-container {
       visibility: hidden;
       opacity: 0;
@@ -38,6 +43,17 @@
 
     .enlarge-on-medium {
       width: 100%;
+    }
+  }
+
+  @media @small {
+    .image-container {
+      max-width: 300px;
+      margin: 0 auto;
+      left: 50%;
+      position: relative;
+      transform: translate(-50%);
+      margin-bottom: 30px;
     }
   }
 

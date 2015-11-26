@@ -25,6 +25,7 @@
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
       callback(xmlHttp.responseText);
     }
+
     xmlHttp.open("GET", theUrl, true); // true for asynchronous
     xmlHttp.send(null);
   }
@@ -77,21 +78,34 @@
 
   resizeMe.refreshImages = function() {
     var images = document.querySelectorAll('img[data-src]');
+    var media = window.matchMedia( "(min-width: 720px)" );
 
-    for (var i = 0; i < images.length; i++) {
-      ImageLoader.load(images[i]);
+    if(document.querySelector('.page--feature') && window.devicePixelRatio === 1 && media.matches ){
+      for (var i = 0; i < images.length; i++) {
+        var img = images[i];
+        // img.setAttribute('data-image-resolution', '1000w');
+        // img.setAttribute('src', img.getAttribute('data-src') + '?format=750w');
+
+
+        ImageLoader.load(images[i]);
+      }
+    } else {
+      for (var i = 0; i < images.length; i++) {
+        ImageLoader.load(images[i]);
+      }
     }
+
   };
   resizeMe.refreshImages();
 
    /**
    * Initializing some scripts after page load
    */
-   function afterLoad() {
+  function afterLoad() {
      readerLine();
      slideshow();
      socialCounting();
-   };
+  };
 
   window.addEventListener('load', afterLoad);
 
@@ -207,6 +221,13 @@
     if( body.classList.contains('side_menu_open') && e.target.nodeName === 'DIV'){
       document.body.classList.toggle('side_menu_open');
     }
+
+    if(document.querySelector('.masonry_selector')){
+      var selector = document.querySelector('.masonry_selector');
+      if( selector.classList.contains('active') && e.target.classList != 'masonry_selector_title'){
+        selector.classList.remove('active')
+      }
+    }
   });
 
   [].forEach.call(document.querySelectorAll('.header_navigation_more > p'), function(el,i,a) {
@@ -289,12 +310,10 @@
       r = r[1];
     }
 
-
-
     el.addEventListener('click', function(){
       inject.innerHTML  =     '<div class="overlay">'+
-                                '<div class="overlay_close"><svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7 14 1.41z" fill="#FFF" fill-rule="evenodd"/></svg></div>'+
                                 '<div class="overlay_container">'+
+                                  '<div class="overlay_close"><svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7 14 1.41z" fill="#FFF" fill-rule="evenodd"/></svg></div>'+
                                   '<iframe id="s9zzxkFbr8A-placeholder" frameborder="0" allowfullscreen="1" title="YouTube video player" width="1000" height="562" src="https://www.youtube.com/embed/'+r+'?autoplay=1&amp;rel=0&amp;showinfo=0&amp;theme=light&amp;color=white&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fwww.impraise.com"></iframe>'+
                                 '</div>'+
                               '</div>'
@@ -302,13 +321,13 @@
     var close = document.querySelector('.overlay_close');
     var overlay = document.querySelector('.overlay');
 
-     close.addEventListener('click', function(){
-        inject.innerHTML = "";
-     });
+    close.addEventListener('click', function(){
+      inject.innerHTML = "";
+    });
 
     overlay.addEventListener('click', function(){
-        inject.innerHTML = "";
-     });
+      inject.innerHTML = "";
+    });
 
 
      pressMe.closeModal = function(e){
@@ -418,17 +437,14 @@
    function socialCounting() {
     [].forEach.call(document.querySelectorAll('.social_block'), function(el,i,a) {
       Socialcount.all(function (counts) {
-        if(counts.twitter > 0){
-          el.querySelector('.twitter .count') = counts.twitter;
-        }
         if(counts.facebook > 0){
-          el.querySelector('.facebook .count') = counts.facebook;
+          el.querySelector('.facebook .count').innerHTML = counts.facebook;
         }
         if(counts.google > 0){
-          el.querySelector('.google .count') = counts.google;
+          el.querySelector('.google .count').innerHTML = counts.google;
         }
         if(counts.linkedin > 0){
-          el.querySelector('.linkedin .count') = counts.linkedin;
+          el.querySelector('.linkedin .count').innerHTML = counts.linkedin;
         }
       });
     });
@@ -690,9 +706,13 @@
     'RS','IM','RS','ME'],
 
     getState = function(){
-      httpGetAsync('http://ipinfo.io/country',function(response) {
-        proceed(response);
-      });
+
+      if(location.protocol == 'http:'){
+        httpGetAsync('http://ipinfo.io/country',function(response) {
+          proceed(response);
+        });
+      }
+
     },
 
     proceed = function(resp) {

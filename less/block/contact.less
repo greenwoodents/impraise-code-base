@@ -68,7 +68,7 @@
     width: 100%;
     text-align: center;
     display: block;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 
     .contact_item {
       display:  inline-block;
@@ -83,6 +83,10 @@
         font-weight: 600;
         width: inherit;
         margin-left: 5px;
+
+        @media @small {
+          line-height: 22px;
+        }
       }
     }
   }
@@ -109,6 +113,11 @@
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
+
+      @media @small {
+        width: 18px;
+        height: 18px;
+      }
     }
 
     &:after{
@@ -132,7 +141,7 @@
       background-image: url(../assets/ics/ic_call.svg);
 
       @media @small {
-        top: 10px;
+        top: 0px;
       }
     }
 

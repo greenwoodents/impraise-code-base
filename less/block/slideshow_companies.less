@@ -22,6 +22,12 @@
       margin: 0 auto;
       padding-bottom: 21px;
     }
+
+    @media @medium {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
   .slideshow_companies_logo_wrap {
     display: inline-block;
@@ -85,7 +91,7 @@
           transition: 300ms 200ms ease-in-out;
           visibility: visible;
           opacity: 1;
-          transform: translateY(-9px);
+          transform: translateY(-11px);
           left: 50%;
         }
       }
@@ -102,7 +108,7 @@
     @media @1000 {
       &.active {
         &:after {
-          transform: translateY(0px);
+          transform: translateY(-11px);
         }
       }
     }

@@ -8,6 +8,16 @@
     margin-bottom: 11px;
   }
 
+    .main-content-wrap {
+      @media @1000 {
+        width: 1034px;
+        padding: 0;
+      }
+
+    }
+
+
+
   @media @small {
     .row .col,
     .sqs-block {
@@ -15,9 +25,7 @@
     }
   }
 
-  @media @medium {
 
-  }
 
   @media @small {
     .svg-icon {
@@ -39,14 +47,25 @@
       padding: 0;
     }
   }
+
+
+  @media @small {
+    .main-content-wrap .row .row:nth-child(4n-2){
+      background-color: #fff;
+      display: flex;
+      flex-wrap: wrap-reverse;
+    }
+
+
+  }
+
+
 }
 
 
 @media @medium {
   .svg-icon {
     position: absolute;
-    // top: 44px;
-    // left: -30px;
     top: 59px;
     left: -15px;
   }

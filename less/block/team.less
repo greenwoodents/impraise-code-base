@@ -197,6 +197,14 @@
 
 .investors {
 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media @small {
+    margin-bottom: 120px;
+  }
+
   .investors_description {
     text-align: center;
     margin-top: 21px;
@@ -228,7 +236,6 @@
   }
 
   .investors_description_name {
-    font-family: @openSans;
     font-size: 28px;
     color: #30393F;
     line-height: 40px;
@@ -237,7 +244,6 @@
 
   .investors_description_positon {
     opacity: 0.75;
-    font-family: OpenSans;
     font-size: 12px;
     color: #657684;
     line-height: 16px;

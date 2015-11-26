@@ -106,8 +106,7 @@
       border-radius: 3px;
       width: 94%;
       margin: 0 auto;
-      padding: 65px 3% 23px;
-
+      padding: 15px 3% 23px;
       a {
         position: initial;
       }
@@ -117,6 +116,13 @@
       &:hover {
         opacity: .7;
         cursor: pointer;
+      }
+    }
+
+    a {
+      color: #fff;
+      &:hover {
+        color: #fff;
       }
     }
   }
@@ -168,13 +174,13 @@
       margin: 0 auto;
       padding-left: 25px;
 
-      .wrote-about_item_logo {
-        position: absolute !important;
-        top: 22px !important;
-        left: 50%;
-        transform: translate(-50%);
-        width: 35%;
-      }
+      // .wrote-about_item_logo {
+      //   position: absolute !important;
+      //   top: 22px !important;
+      //   left: 50%;
+      //   transform: translate(-50%);
+      //   width: 35%;
+      // }
     }
 
     @media @medium {
@@ -288,6 +294,18 @@
         @media @medium {
           margin-right: 0;
         }
+
+        @media @small {
+          width: 100%;
+          margin-right: 0;
+          position: relative;
+          margin-bottom: 30px;
+        }
       }
   }
+}
+
+#wrote-about_title .sqs-block-spacer {
+  display: none;
+  margin-bottom: 20px;
 }
