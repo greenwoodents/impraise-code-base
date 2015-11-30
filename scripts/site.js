@@ -1,4 +1,5 @@
 (function () {
+  'use strict';
   /**
    * When set to true, you get helpful console logs.
    * @const DEBUG
@@ -8,7 +9,9 @@
   var scrollMe = {};
   var resizeMe = {};
   var pressMe = {};
+  var parts = {};
   var mq = window.matchMedia( "(max-width: 720px)" );
+
 
 
   function runMethods(obj,e) {
@@ -30,6 +33,15 @@
     xmlHttp.send(null);
   }
 
+  /**
+   * Initializing some scripts after page load
+   */
+  function afterLoad() {
+    parts.readerLine();
+    parts.slideshow();
+    parts.socialCounting();
+  };
+
 
   /**
    * Adding listeners form scroll and resize
@@ -38,12 +50,7 @@
   window.addEventListener('touchmove', function(e){ runMethods(scrollMe);});
   window.addEventListener('resize', function(e){ runMethods(resizeMe,e);});
   window.addEventListener("keyup", function(e){ if(e.keyCode == 27) { runMethods(pressMe,e) }}, false);
-
-  /**
-   * removing fouc hide class from body to prevent flash of unstyled content.
-   */
-  //document.querySelector('body').classList.remove('fouc');
-
+  window.addEventListener('load', afterLoad);
 
   /**
    * Alowing download images on desktop and mobile depending on chosen class chekImages for mobile and lazyImage for everything.
@@ -69,51 +76,68 @@
   };
   resizeMe.checkMobileImages();
 
-
   /**
    * Run ImageLoader on resize so images on the page get refreshed.
    * @method refreshImages of resizeMe delegator
    * @private
    */
 
-  resizeMe.refreshImages = function() {
+  var refreshImages = function() {
     var images = document.querySelectorAll('img[data-src]');
-    var media = window.matchMedia( "(min-width: 720px)" );
+    for (var i = 0; i < images.length; i++) {
+      ImageLoader.load(images[i]);
+    }
+  };
+  resizeMe.refreshImages = refreshImages;
+  parts.refreshimages = refreshImages;
 
-    if(document.querySelector('.page--feature') && window.devicePixelRatio === 1 && media.matches ){
-      for (var i = 0; i < images.length; i++) {
-        var img = images[i];
-        // img.setAttribute('data-image-resolution', '1000w');
-        // img.setAttribute('src', img.getAttribute('data-src') + '?format=750w');
+  /*
+    Share buttons affix
+  */
+  scrollMe.affix = function() {
+    if (!(document.querySelector('.social_block'))){
+      return;
+    }
+    var jsAboutUsNav = document.querySelector('.social_block');
+    var page = document.querySelector('.page');
 
-
-        ImageLoader.load(images[i]);
-      }
-    } else {
-      for (var i = 0; i < images.length; i++) {
-        ImageLoader.load(images[i]);
-      }
+    if(mq.matches){
+      jsAboutUsNav.style.cssText = null;
     }
 
+    if(jsAboutUsNav == undefined || page == true || mq.matches){
+      return false
+    }
+
+    var footer = document.querySelector('.email_signup'),
+        elStyle = jsAboutUsNav.style,
+        scrollTop = window.pageYOffset,
+        a = scrollTop - document.querySelector('.js-affix-header').offsetHeight,
+        b = scrollTop - document.querySelector('.js-affix-body').offsetHeight - 375;
+
+    if(a > 0 && b < 0){
+      elStyle.cssText = null;
+      elStyle.position = 'fixed';
+      elStyle.top = '10%';
+    } else {
+      if(a < 0){
+        elStyle.cssText = null;
+        elStyle.position = 'absolute';
+        elStyle.top = '0px';
+      }
+      if(b > 0){
+        elStyle.cssText = null;
+        elStyle.position = 'absolute';
+        elStyle.bottom = '0px';
+      }
+    };
   };
-  resizeMe.refreshImages();
-
-   /**
-   * Initializing some scripts after page load
-   */
-  function afterLoad() {
-     readerLine();
-     slideshow();
-     socialCounting();
-  };
-
-  window.addEventListener('load', afterLoad);
 
 
- /**
+  /**
   * scroll and resize events
   */
-  function infiniteScroll(parent, post) {
+  var infiniteScroll = function(parent, post) {
     if(!(document.querySelector('.js-blog'))){
       return;
     }
@@ -181,19 +205,20 @@
       }
     };
   };
-  // Call the function on domready.
-  Y.use('node', function() {
-    Y.on('domready', function() {
-      infiniteScroll('.homepage','.article-list_item');
+
+  // Infinite scroll call function on domready.
+  parts.infiniteScrollInit = function() {
+    Y.use('node', function() {
+      Y.on('domready', function() {
+        infiniteScroll('.homepage','.article-list_item');
+      });
     });
-  });
-
-
+  };
 
   /*
     reader line
   */
-  function readerLine() {
+  parts.readerLine = function() {
     if(!(document.querySelector('.js-footer') && document.querySelector('PROGRESS'))) {
       return false;
     }
@@ -213,137 +238,10 @@
   };
 
   /*
-    Menu open listener
-  */
-  var site = document.querySelector('.site');
-  site.addEventListener('click', function(e){
-    var body = document.body;
-    if( body.classList.contains('side_menu_open') && e.target.nodeName === 'DIV'){
-      document.body.classList.toggle('side_menu_open');
-    }
-
-    if(document.querySelector('.masonry_selector')){
-      var selector = document.querySelector('.masonry_selector');
-      if( selector.classList.contains('active') && e.target.classList != 'masonry_selector_title'){
-        selector.classList.remove('active')
-      }
-    }
-  });
-
-  [].forEach.call(document.querySelectorAll('.header_navigation_more > p'), function(el,i,a) {
-    var header = document.querySelector('.header');
-    el.addEventListener('click', function(){
-      header.classList.toggle('active-navigation');
-    });
-  });
-
-  [].forEach.call(document.querySelectorAll('.js-more-open'), function(el,i,a) {
-    var body = document.body;
-    el.addEventListener('click', function(){
-      body.classList.toggle('side_menu_open');
-    });
-
-    var closeSideMenu = document.querySelector('.side_menu .overlay_close ');
-    closeSideMenu.addEventListener('click', function() {
-      body.classList.toggle('side_menu_open');
-    });
-  });
-
-
-
-  /*
-    Modal open listeners
-  */
-  [].forEach.call(document.querySelectorAll('.js-modal-open-schedule'), function(el,i,a) {
-    var modal = document.querySelector('.modal_schedule_demo'),
-        close = document.querySelector('.modal_schedule_demo_close'),
-        bcg = document.querySelector('.modal_schedule_demo_bcg'),
-        body = document.body,
-
-    closeModal = function(){
-      body.classList.remove('modal-active');
-      modal.classList.remove('visible');
-      modal.classList.add('hidden');
-    };
-
-    pressMe.closeForm = function(){
-      closeModal();
-    };
-
-    el.addEventListener('click', function(){
-      body.classList.add('modal-active');
-      modal.classList.remove('hidden');
-      modal.classList.add('visible');
-
-      if (body.classList.contains('side_menu_open')) {
-        body.classList.remove('side_menu_open');
-      };
-
-      if(mq.matches){
-        window.scrollTo(0,0);
-      }
-    });
-
-    close.addEventListener('click', closeModal);
-    bcg.addEventListener('click', closeModal);
-  });
-
-
-  /* Video opener
-
-      Making video overlay from data-video atribute on js-video class.
-
-      Curently supporting players:
-      Youtube.com
-
-  */
-  [].forEach.call(document.querySelectorAll('.js-video'), function(el,i,a) {
-    var inject = document.querySelector('.overlays');
-    var url = el.getAttribute('data-video');
-    var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-
-    var r = url.match(rx);
-
-    if(r === null){
-      r = url;
-    } else {
-      r = r[1];
-    }
-
-    el.addEventListener('click', function(){
-      inject.innerHTML  =     '<div class="overlay">'+
-                                '<div class="overlay_container">'+
-                                  '<div class="overlay_close"><svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7 14 1.41z" fill="#FFF" fill-rule="evenodd"/></svg></div>'+
-                                  '<iframe id="s9zzxkFbr8A-placeholder" frameborder="0" allowfullscreen="1" title="YouTube video player" width="1000" height="562" src="https://www.youtube.com/embed/'+r+'?autoplay=1&amp;rel=0&amp;showinfo=0&amp;theme=light&amp;color=white&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fwww.impraise.com"></iframe>'+
-                                '</div>'+
-                              '</div>'
-
-    var close = document.querySelector('.overlay_close');
-    var overlay = document.querySelector('.overlay');
-
-    close.addEventListener('click', function(){
-      inject.innerHTML = "";
-    });
-
-    overlay.addEventListener('click', function(){
-      inject.innerHTML = "";
-    });
-
-
-     pressMe.closeModal = function(e){
-       inject.innerHTML = "";
-     };
-    })
-  });
-
-
-  /*
     Modal verification
    */
-  function verification() {
+  parts.verification = function() {
     [].forEach.call(document.querySelectorAll('.modal_schedule_demo_main_form .form-button-wrapper .button'), function(el,i,a) {
-
-
 
       el.addEventListener('click', function(){
         var form = document.querySelector('.form-inner-wrapper form');
@@ -385,82 +283,32 @@
       })
     });
   };
-  verification();
-
-
-  /*
-    Share buttons affix
-  */
-  scrollMe.affix = function() {
-    if (!(document.querySelector('.social_block'))){
-      return;
-    }
-    var jsAboutUsNav = document.querySelector('.social_block');
-    var page = document.querySelector('.page');
-
-    if(mq.matches){
-      jsAboutUsNav.style.cssText = null;
-    }
-
-    if(jsAboutUsNav == undefined || page == true || mq.matches){
-      return false
-    }
-
-    var footer = document.querySelector('.email_signup'),
-        elStyle = jsAboutUsNav.style,
-        scrollTop = window.pageYOffset,
-        a = scrollTop - document.querySelector('.js-affix-header').offsetHeight,
-        b = scrollTop - document.querySelector('.js-affix-body').offsetHeight - 375;
-
-    if(a > 0 && b < 0){
-      elStyle.cssText = null;
-      elStyle.position = 'fixed';
-      elStyle.top = '10%';
-    } else {
-      if(a < 0){
-        elStyle.cssText = null;
-        elStyle.position = 'absolute';
-        elStyle.top = '0px';
-      }
-      if(b > 0){
-        elStyle.cssText = null;
-        elStyle.position = 'absolute';
-        elStyle.bottom = '0px';
-      }
-    };
-  };
 
   /*
     Share buttons counter display.
-
    */
-   function socialCounting() {
+  parts.socialCounting = function() {
     [].forEach.call(document.querySelectorAll('.social_block'), function(el,i,a) {
-      Socialcount.all(function (counts) {
-        if(counts.facebook > 0){
-          el.querySelector('.facebook .count').innerHTML = counts.facebook;
-        }
-        if(counts.google > 0){
-          el.querySelector('.google .count').innerHTML = counts.google;
-        }
-        if(counts.linkedin > 0){
-          el.querySelector('.linkedin .count').innerHTML = counts.linkedin;
-        }
-      });
+    Socialcount.all(function (counts) {
+      if(counts.facebook > 0){
+        el.querySelector('.facebook .count').innerHTML = counts.facebook;
+      }
+      if(counts.google > 0){
+        el.querySelector('.google .count').innerHTML = counts.google;
+      }
+      if(counts.linkedin > 0){
+        el.querySelector('.linkedin .count').innerHTML = counts.linkedin;
+      }
     });
-   };
-
-
-
+    });
+  };
 
   /*
     Slideshow
     Run On Load
     object of parameters.
-
-
   */
-  function slideshow() {
+  parts.slideshow = function() {
     if(!(document.querySelector('.slideshow_companies'))){
       return;
     }
@@ -552,7 +400,7 @@
     init();
   };
 
-  var Pricing = function() {
+  parts.Pricing = function() {
     if(!(document.querySelector('.pricing_input'))){
       return;
     }
@@ -697,9 +545,8 @@
     };
     init();
   };
-  Pricing();
 
-  function personalisedAdress() {
+  parts.personalisedAdress = function() {
     var state,
     states = ['AL','AD','AT','BY','BE','BA','BG','HR','CY','CZ','DK','EE','FO','FI','FR','DE','GI','GR','HU','IS','IE','IT','LV',
     'LI','LT','LU','MK','MT','MD','MC','NL','NO','PL','PT','RO','RU','SM','RS','SK','SI','ES','SE','CH','UA','GB','VA',
@@ -730,17 +577,12 @@
     };
 
     getState();
-  }
-  personalisedAdress();
+  };
 
-
-  /* Instagram post opening in new tab */
-  [].forEach.call(document.querySelectorAll('.instagram_box .image-slide-anchor'), function(el,i,a) {
-    el.setAttribute('target', '_blank');
-  });
-
-  /* masonry listeners and filter handler. */
-  function masonry() {
+  /*
+    masonry listeners and filter handler.
+  */
+  parts.masonry = function() {
     if(!(document.querySelector('.masonry'))) {
       return;
     }
@@ -759,28 +601,174 @@
       document.querySelector('.masonry_selector').classList.add('active');
     })
   };
-  masonry();
 
+  /*
+    Menu open listener
+  */
+  parts.menuopen = function() {
+    var site = document.querySelector('.site');
+    site.addEventListener('click', function(e){
+      var body = document.body;
+      if( body.classList.contains('side_menu_open') && e.target.nodeName === 'DIV'){
+        document.body.classList.toggle('side_menu_open');
+      }
+
+      if(document.querySelector('.masonry_selector')){
+        var selector = document.querySelector('.masonry_selector');
+        if( selector.classList.contains('active') && e.target.classList != 'masonry_selector_title'){
+          selector.classList.remove('active')
+        }
+      }
+    });
+
+    [].forEach.call(document.querySelectorAll('.header_navigation_more > p'), function(el,i,a) {
+      var header = document.querySelector('.header');
+      el.addEventListener('click', function(){
+        header.classList.toggle('active-navigation');
+      });
+    });
+
+    [].forEach.call(document.querySelectorAll('.js-more-open'), function(el,i,a) {
+      var body = document.body;
+      el.addEventListener('click', function(){
+        body.classList.toggle('side_menu_open');
+      });
+
+      var closeSideMenu = document.querySelector('.side_menu .overlay_close ');
+      closeSideMenu.addEventListener('click', function() {
+        body.classList.toggle('side_menu_open');
+      });
+    });
+  };
+
+  /*
+    Modal open listeners
+  */
+  parts.modalopen = function() {
+    [].forEach.call(document.querySelectorAll('.js-modal-open-schedule'), function(el,i,a) {
+      var modal = document.querySelector('.modal_schedule_demo'),
+          close = document.querySelector('.modal_schedule_demo_close'),
+          bcg = document.querySelector('.modal_schedule_demo_bcg'),
+          body = document.body,
+
+      closeModal = function(){
+        body.classList.remove('modal-active');
+        modal.classList.remove('visible');
+        modal.classList.add('hidden');
+      };
+
+      pressMe.closeForm = function(){
+        closeModal();
+      };
+
+      el.addEventListener('click', function(){
+        body.classList.add('modal-active');
+        modal.classList.remove('hidden');
+        modal.classList.add('visible');
+
+        if (body.classList.contains('side_menu_open')) {
+          body.classList.remove('side_menu_open');
+        };
+
+        if(mq.matches){
+          window.scrollTo(0,0);
+        }
+      });
+
+      close.addEventListener('click', closeModal);
+      bcg.addEventListener('click', closeModal);
+    });
+  };
+
+  /*
+    Video opener
+
+    Making video overlay from data-video atribute on js-video class.
+
+    Curently supporting players:
+    Youtube.com
+  */
+  parts.videoopen = function() {
+    [].forEach.call(document.querySelectorAll('.js-video'), function(el,i,a) {
+      var inject = document.querySelector('.overlays');
+      var url = el.getAttribute('data-video');
+      var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+      var r = url.match(rx);
+
+      if(r === null){
+        r = url;
+      } else {
+        r = r[1];
+      }
+
+      el.addEventListener('click', function(){
+        inject.innerHTML  =     '<div class="overlay">'+
+                                  '<div class="overlay_container">'+
+                                    '<div class="overlay_close"><svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7 14 1.41z" fill="#FFF" fill-rule="evenodd"/></svg></div>'+
+                                    '<iframe id="s9zzxkFbr8A-placeholder" frameborder="0" allowfullscreen="1" title="YouTube video player" width="1000" height="562" src="https://www.youtube.com/embed/'+r+'?autoplay=1&amp;rel=0&amp;showinfo=0&amp;theme=light&amp;color=white&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fwww.impraise.com"></iframe>'+
+                                  '</div>'+
+                                '</div>'
+
+      var close = document.querySelector('.overlay_close');
+      var overlay = document.querySelector('.overlay');
+
+      close.addEventListener('click', function(){
+        inject.innerHTML = "";
+      });
+
+      overlay.addEventListener('click', function(){
+        inject.innerHTML = "";
+      });
+
+
+       pressMe.closeModal = function(e){
+         inject.innerHTML = "";
+       };
+      })
+    });
+  };
+
+  /* Instagram post opening in new tab */
+  parts.instagram = function() {
+    [].forEach.call(document.querySelectorAll('.instagram_box .image-slide-anchor'), function(el,i,a) {
+      el.setAttribute('target', '_blank');
+    });
+  };
 
   /* Function for checking if is displayed same post in "post in" area */
-  [].forEach.call(document.querySelectorAll('.js-check-articles'), function(el,i,a) {
-    var id = document.querySelector('.js-check-articles-main').getAttribute('data-item-id');
+  parts.samepost = function() {
+    [].forEach.call(document.querySelectorAll('.js-check-articles'), function(el,i,a) {
+      var id = document.querySelector('.js-check-articles-main').getAttribute('data-item-id');
 
-    if(id){
-      var item = document.getElementById(id);
+      if(id){
+        var item = document.getElementById(id);
 
-      if(item){
-        item.remove();
+        if(item){
+          item.remove();
+        }
       }
-    }
-  });
-
+    });
+  };
 
   /* This function opening description on team member after clicking their name */
-  [].forEach.call(document.querySelectorAll('.team_person_description_name'), function(el,i,a) {
-    var par = el.parentNode.parentNode;
-    el.addEventListener('click', function(e){
-      par.classList.toggle('show');
+  parts.memberopener = function() {
+   [].forEach.call(document.querySelectorAll('.team_person_description_name'), function(el,i,a) {
+      var par = el.parentNode.parentNode;
+      el.addEventListener('click', function(e){
+        par.classList.toggle('show');
+      });
     });
+  };
+
+
+
+
+  runMethods(parts);
+
+  pjax.connect({
+    'container': 'site',
+    'complete': function(e){runMethods(parts);},
   });
+
 }());
