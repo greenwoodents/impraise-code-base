@@ -1,4 +1,4 @@
-(function () {
+var web = (function () {
   'use strict';
   /**
    * When set to true, you get helpful console logs.
@@ -83,10 +83,11 @@
    */
 
   var refreshImages = function() {
-    var images = document.querySelectorAll('img[data-src]');
-    for (var i = 0; i < images.length; i++) {
-      ImageLoader.load(images[i]);
-    }
+    console.log('ej');
+    [].forEach.call(document.querySelectorAll('img[data-src]'), function(el,i,a) {
+      console.log(el);
+      ImageLoader.load(el);
+    });
   };
   resizeMe.refreshImages = refreshImages;
   parts.refreshimages = refreshImages;
@@ -753,6 +754,7 @@
 
   /* This function opening description on team member after clicking their name */
   parts.memberopener = function() {
+
    [].forEach.call(document.querySelectorAll('.team_person_description_name'), function(el,i,a) {
       var par = el.parentNode.parentNode;
       el.addEventListener('click', function(e){
@@ -762,13 +764,14 @@
   };
 
 
-
+  console.log(parts);
 
   runMethods(parts);
 
-  pjax.connect({
-    'container': 'site',
-    'complete': function(e){runMethods(parts);},
-  });
+  // pjax.connect({
+    // 'container': 'site',
+    // 'complete': function(e){console.log('partz'); runMethods(parts);},
+  // });
 
+  return parts;
 }());
