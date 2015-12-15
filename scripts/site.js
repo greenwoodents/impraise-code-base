@@ -37,6 +37,7 @@ var web = (function () {
    * Initializing some scripts after page load
    */
   function afterLoad() {
+    resizeMe.checkMobileImages();
     parts.readerLine();
     parts.slideshow();
     parts.socialCounting();
@@ -83,9 +84,7 @@ var web = (function () {
    */
 
   var refreshImages = function() {
-    console.log('ej');
     [].forEach.call(document.querySelectorAll('img[data-src]'), function(el,i,a) {
-      console.log(el);
       ImageLoader.load(el);
     });
   };
@@ -307,7 +306,6 @@ var web = (function () {
   /*
     Slideshow
     Run On Load
-    object of parameters.
   */
   parts.slideshow = function() {
     if(!(document.querySelector('.slideshow_companies'))){
@@ -340,18 +338,7 @@ var web = (function () {
       Function for displaying slide number wich is put as first and only argument.
     */
     function display(slide) {
-      // var position = positioned;
 
-      // if(slide > 0){
-      //   position = (widthOfScreen * slide) * -1;
-      // } else {
-      //   position = 0;
-      // }
-
-      // wrap.style.transform = 'translateX('+ position +'px)';
-      // wrap.style.webkitTransform  = 'translateX('+ position +'px)';
-      // displayed = slide;
-      //
       [].forEach.call(item, function(el,i,a) {
         if(slide === i){
           el.classList.remove('hidden');
@@ -764,14 +751,9 @@ var web = (function () {
   };
 
 
-  console.log(parts);
+
 
   runMethods(parts);
-
-  // pjax.connect({
-    // 'container': 'site',
-    // 'complete': function(e){console.log('partz'); runMethods(parts);},
-  // });
 
   return parts;
 }());
