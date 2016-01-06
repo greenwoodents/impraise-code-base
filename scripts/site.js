@@ -182,23 +182,23 @@ var web = (function () {
           // Make the Ajax request.
           Y.io(urlQuery + '?page=' + postIndex, {
             on: {
-                success: function (x, o) {
-                    try {
-                      var d = Y.DOM.create(o.responseText);
-                    } catch (e) {
-                      console.log("JSON Parse failed!");
-                      return;
-                    }
-
-                    // Append the contents of the next page to this page.
-                    Y.one(parent).append(Y.Selector.query(parent, d, true).innerHTML);
-
-                    // Reset some variables.
-                    stuffBottom = Y.one(parent).get('clientHeight') + Y.one(parent).getY();
-                    presentNumber = Y.all(post).size();
-                    execute = true;
-                    resizeMe.checkMobileImages();
+              success: function (x, o) {
+                try {
+                  var d = Y.DOM.create(o.responseText);
+                } catch (e) {
+                  console.log("JSON Parse failed!");
+                  return;
                 }
+
+                // Append the contents of the next page to this page.
+                Y.one(parent).append(Y.Selector.query(parent, d, true).innerHTML);
+
+                // Reset some variables.
+                stuffBottom = Y.one(parent).get('clientHeight') + Y.one(parent).getY();
+                presentNumber = Y.all(post).size();
+                execute = true;
+                resizeMe.checkMobileImages();
+              }
             }
           });
         }
@@ -751,9 +751,27 @@ var web = (function () {
   };
 
 
+  //function for adding click event listener to element to togling a class.
+  var opener = function(button, element, classname) {
+    var buttonEl = document.querySelector(button);
+    var el = document.querySelector(element);
+
+    if(buttonEl == undefined || el == undefined ){
+      return;
+    }
+
+
+    buttonEl.addEventListener('click', function(){
+      el.classList.toggle(classname);
+    });
+  };
+
+  parts.openers = function() {
+    opener('.js-press-menu-button','.js-press-menu','menu-close');
+  }
+
 
 
   runMethods(parts);
-
   return parts;
 }());
