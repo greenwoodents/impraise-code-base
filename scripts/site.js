@@ -17,7 +17,7 @@ var web = (function () {
   function runMethods(obj,e) {
     for (var key in obj) {
      if (obj.hasOwnProperty(key)) {
-        obj[key].call();
+        obj[key].call(e);
       }
     }
   };
@@ -41,6 +41,24 @@ var web = (function () {
     parts.readerLine();
     parts.slideshow();
     parts.socialCounting();
+  };
+
+
+  /*
+    Event function
+
+    For FB pixel are arguments concat.
+    Usage. sendEvent('Open','Demo request modal');
+  */
+  function sendEvent(eventCategory, eventAction) {
+    var evt = eventCategory + ' ' + eventAction;
+    fbq('track', evt);
+
+    ga('send', {
+      hitType: 'event',
+      eventCategory: eventCategory,
+      eventAction: eventAction,
+    });
   };
 
 
@@ -260,9 +278,12 @@ var web = (function () {
 
 
         function checker() {
+          var invalid = 0;
+
           [].forEach.call(document.querySelectorAll('.form-item'), function(el,i,a) {
             var parent = el;
             var input = el.querySelector('.field-element');
+
 
             input.addEventListener('focus', function(event) {
               parent.classList.remove('is-invalid');
@@ -273,10 +294,17 @@ var web = (function () {
 
             if(parent.querySelector('.field-error')){
               parent.classList.add('is-invalid');
+              invalid++;
             } else {
               parent.classList.add('is-ok');
             }
           });
+
+          if(invalid === 0){
+            sendEvent('Submited','Demo request modal');
+          }
+
+
         }
 
 
@@ -633,21 +661,29 @@ var web = (function () {
     Modal open listeners
   */
   parts.modalopen = function() {
+
+    var modal = document.querySelector('.modal_schedule_demo'),
+      close = document.querySelector('.modal_schedule_demo_close'),
+      bcg = document.querySelector('.modal_schedule_demo_bcg'),
+      body = document.body,
+
+    closeModal = function(){
+      body.classList.remove('modal-active');
+      modal.classList.remove('visible');
+      modal.classList.add('hidden');
+
+      sendEvent('Close','Demo request modal');
+    };
+
+    pressMe.closeForm = function(e){
+      try { event.stopImmediatePropagation(); } catch (err) { console.log(err); }
+      closeModal();
+    };
+
+
+
     [].forEach.call(document.querySelectorAll('.js-modal-open-schedule'), function(el,i,a) {
-      var modal = document.querySelector('.modal_schedule_demo'),
-          close = document.querySelector('.modal_schedule_demo_close'),
-          bcg = document.querySelector('.modal_schedule_demo_bcg'),
-          body = document.body,
 
-      closeModal = function(){
-        body.classList.remove('modal-active');
-        modal.classList.remove('visible');
-        modal.classList.add('hidden');
-      };
-
-      pressMe.closeForm = function(){
-        closeModal();
-      };
 
       el.addEventListener('click', function(){
         body.classList.add('modal-active');
@@ -661,11 +697,15 @@ var web = (function () {
         if(mq.matches){
           window.scrollTo(0,0);
         }
+
+        sendEvent('Open','Demo request modal');
       });
 
-      close.addEventListener('click', closeModal);
-      bcg.addEventListener('click', closeModal);
+
     });
+
+    close.addEventListener('click', closeModal);
+    bcg.addEventListener('click', closeModal);
   };
 
   /*
