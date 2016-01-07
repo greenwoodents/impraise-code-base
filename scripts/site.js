@@ -790,6 +790,10 @@ var web = (function () {
     });
   };
 
+  //Procedure for changing year to actual in footer
+  parts.footerYear = function() {
+    document.querySelector('.js-year').innerHTML = new Date().getFullYear();
+  };
 
   //function for adding click event listener to element to togling a class.
   var opener = function(button, element, classname) {
