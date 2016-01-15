@@ -1,0 +1,301 @@
+//GRID
+.resource-side-menu {
+  width: 217px;
+
+  @media @930 {
+    width: 100%;
+
+    .only-mobile {
+      visibility: visible;
+      opacity: 1;
+      display: block;
+    }
+
+    p {
+      text-align: center !important;
+    }
+  }
+
+  a {
+    font-weight: 700;
+
+    &:hover {
+      color: @textColor;
+    }
+  }
+}
+
+.resource-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.resource-content {
+
+  min-height: 850px;
+  padding-bottom: 50px;
+
+  position: relative;
+
+  @media @xxmedium {
+    padding-left: 32px;
+    border-left: 1px solid #d6d7d9;
+
+    h2 {
+      font-size: 48px;
+      margin-bottom: 40px;
+    }
+  }
+  @media @930 {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
+//ITEMS
+.resource_items {
+  padding: 0 0 10px;
+  overflow: visible;
+
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+.resource_item_wrap {
+  padding-bottom: 5px;
+
+  @media @medium {
+    padding: 0 19px 5px 0;
+  }
+}
+
+.resource_item {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.13), 0px 2px 10px 0px rgba(0,0,0,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 19px;
+
+  img {
+    max-height: 300px;
+    width: 100%;
+  }
+}
+
+.resource_item_box {
+  transition: 300ms;
+  @media @xxmedium {
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0px 8px 17px 0px rgba(0,0,0,0.20), 0px 6px 20px 0px rgba(0,0,0,0.19);
+    }
+  }
+}
+
+.resource_item_description {
+  padding: 10px;
+
+  p {
+    margin: 0;
+    font-weight: 800;
+    font-size: 18px;
+    color: #30393F;
+    line-height: 28px;
+  }
+
+  span {
+    opacity: 0.75;
+    font-weight: 400;
+    font-size: 12px;
+    color: #657684;
+    line-height: 16px;
+    display: block;
+  }
+}
+
+
+//Ebooks
+.resource_item_book {
+  box-shadow: none;
+}
+.ebook-content .col {
+  @media @small {
+    width: 100% !important;
+  }
+}
+
+.resource_item_book_description {
+  @media @small {
+    width: 100%;
+  }
+
+  @media @xxmedium {
+    padding-left: 150px;
+  }
+
+  h4 {
+    font-weight: 800;
+    font-size: 18px;
+    color: #30393F;
+    line-height: 28px;
+    margin: 0;
+  }
+  p {
+    font-size: 16px;
+    color: #657684;
+    line-height: 24px;
+  }
+}
+
+.resource_item_book_image {
+  width: 130px;
+  @media @930 {
+    margin: 0 auto;
+  }
+  @media @xxmedium {
+    float: left;
+    height: 100%;
+  }
+}
+
+
+//eBook item
+.ebook-content {
+  p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 40px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  h3 {
+    opacity: 0.75;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  blockquote {
+    font-size: 16px;
+    line-height: 24px;
+    font-family: @openSans;
+    font-style: italic;
+    padding: 0;
+    text-align: left;
+  }
+
+  .source {
+    text-align: right !important;
+    padding: 0;
+  }
+}
+
+
+//presentation
+.resource_item_presentation {
+  position: relative;
+
+  .arrow {
+    position: absolute;
+    top: 35%;
+    right: 0;
+    width: 46px;
+    height: 55px;
+    background: #30393F;
+    border-radius: 3px 0px 0px 3px;
+
+    &:after {
+      left: 100%;
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0);
+      border-left-color: #fff;
+      border-width: 8px;
+      margin-top: -8px;
+      left: 21px;
+    }
+  }
+}
+
+
+//videos
+.resource_item_video {
+  position: relative;
+
+  .playbutton {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translateX(-50%);
+    width: 66px;
+    height: 66px;
+    background: #30393F;
+    border: 5px solid #FFFFFF;
+    cursor: pointer;
+
+    &:after {
+      left: 39%;
+      top: 47%;
+      border-width: 13px;
+      margin-top: -13px;
+      height: 30px;
+      width: 20px;
+    }
+  }
+}
+
+//posts
+.resource-content {
+  .publishedin {
+    margin: 0;
+
+    .publishedin_item {
+      padding: 0 20px 0 0;
+    }
+  }
+}
+
+
+
+
+//details
+.pressAndresources {
+  .header_content_wrap {
+    text-align: center;
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    .btn {
+      margin-top: 20px;
+    }
+  }
+
+  .trybox_wrap {
+    @media @medium {
+      width: 560px;
+    }
+  }
+}
+

@@ -262,7 +262,7 @@ var web = (function () {
     [].forEach.call(document.querySelectorAll('.modal_schedule_demo_main_form .form-button-wrapper .button'), function(el,i,a) {
 
       el.addEventListener('click', function(){
-        var form = document.querySelector('.form-inner-wrapper form');
+        var form = el.parentNode.parentNode;
 
 
         var submiter = function() {
@@ -280,7 +280,7 @@ var web = (function () {
         function checker() {
           var invalid = 0;
 
-          [].forEach.call(document.querySelectorAll('.form-item'), function(el,i,a) {
+          [].forEach.call(form.querySelectorAll('.form-item'), function(el,i,a) {
             var parent = el;
             var input = el.querySelector('.field-element');
 
@@ -660,12 +660,16 @@ var web = (function () {
   /*
     Modal open listeners
   */
-  parts.modalopen = function() {
+  var modalOpen = function(id) {
 
-    var modal = document.querySelector('.modal_schedule_demo'),
-      close = document.querySelector('.modal_schedule_demo_close'),
-      bcg = document.querySelector('.modal_schedule_demo_bcg'),
-      body = document.body,
+    if(document.querySelector(id) === null){
+      return;
+    }
+
+    var modal = document.querySelector(id),
+        close = document.querySelector(id + ' ' +'.modal_schedule_demo_close'),
+        bcg = document.querySelector(id + ' ' +'.modal_schedule_demo_bcg'),
+        body = document.body,
 
     closeModal = function(){
       body.classList.remove('modal-active');
@@ -675,17 +679,47 @@ var web = (function () {
       sendEvent('Close','Demo request modal');
     };
 
+    console.log(id, modal, close);
+
     pressMe.closeForm = function(e){
       try { event.stopImmediatePropagation(); } catch (err) { console.log(err); }
       closeModal();
     };
 
+    close.addEventListener('click', closeModal);
+    bcg.addEventListener('click', closeModal);
 
+  };
+
+  parts.modalOpeners = function(){
+    modalOpen('#demo_modal');
+    modalOpen('#ebook_modal');
+
+
+    //Buttons listeners
 
     [].forEach.call(document.querySelectorAll('.js-modal-open-schedule'), function(el,i,a) {
+      var id;
+
+      if(el.getAttribute('modal') === "ebook"){
+        id = '#ebook_modal';
+      } else {
+        id = '#demo_modal';
+      }
+
+
+      var modal = document.querySelector(id),
+          close = document.querySelector( id + ' ' +'.modal_schedule_demo_close'),
+          bcg = document.querySelector( id + ' ' +'.modal_schedule_demo_bcg'),
+          body = document.body;
 
 
       el.addEventListener('click', function(){
+
+        if(this.getAttribute('modal') === "ebook"){
+          document.querySelector('input[name="SQF_BOOK"]').value = document.title;
+        }
+
         body.classList.add('modal-active');
         modal.classList.remove('hidden');
         modal.classList.add('visible');
@@ -699,13 +733,10 @@ var web = (function () {
         }
 
         sendEvent('Open','Demo request modal');
+
       });
 
-
     });
-
-    close.addEventListener('click', closeModal);
-    bcg.addEventListener('click', closeModal);
   };
 
   /*
@@ -814,8 +845,80 @@ var web = (function () {
     opener('.js-press-menu-button','.js-press-menu','menu-close');
   }
 
+  parts.formIdentifier = function(){
+    [].forEach.call(document.querySelectorAll('#modal_ebook form'), function(el,i,a) {
+        el.name = 'ebook_form';
+        console.log('Adding ID')
+    });
+  }
+
 
 
   runMethods(parts);
   return parts;
 }());
+
+
+
+
+
+function liAuth(){
+   IN.User.authorize(function(){
+       onLinkedInLoad();
+   });
+}
+
+// Setup an event listener to make an API call once auth is complete
+function onLinkedInLoad() {
+  getProfileData();
+
+}
+
+// Handle the successful return from the API call
+function onSuccess(data) {
+  console.log(data);
+  populateForm("#modal_ebook form",data);
+  populateForm("#modal_schedule_demo_main_form form",data)
+}
+
+function populateForm(formSelector, data) {
+  var data = data['values'][0];
+
+  [].forEach.call(document.querySelectorAll(formSelector + " label"), function(el,i,a) {
+    var label = el.innerText.trim().toLowerCase().replace(' ', '-');
+    var input = document.querySelector("#" + el.getAttribute('for'));
+
+    console.log(el);
+    console.log(label);
+    console.log(data, input);
+
+
+    switch(label){
+      case "name":
+        input.value = data['firstName'] + " " + data['lastName'];
+        break;
+      case "email-address":
+        input.value = data['emailAddress'];
+        break;
+      case "position":
+        input.value = data['headline'];
+        break;
+      case "role":
+        input.value = data['headline'];
+        break;
+      default:
+        break;
+    }
+
+  });
+};
+
+// Handle an error response from the API call
+function onError(error) {
+  console.log(error);
+}
+
+// Use the API call wrapper to request the member's basic profile data
+function getProfileData() {
+  IN.API.Profile("me").fields("first-name", "last-name", "email-address", "headline", "id").result(onSuccess).error(onError);
+}
