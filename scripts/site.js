@@ -679,7 +679,7 @@ var web = (function () {
       sendEvent('Close','Demo request modal');
     };
 
-    console.log(id, modal, close);
+
 
     pressMe.closeForm = function(e){
       try { event.stopImmediatePropagation(); } catch (err) { console.log(err); }
@@ -845,12 +845,11 @@ var web = (function () {
     opener('.js-press-menu-button','.js-press-menu','menu-close');
   }
 
-  parts.formIdentifier = function(){
-    [].forEach.call(document.querySelectorAll('#modal_ebook form'), function(el,i,a) {
-        el.name = 'ebook_form';
-        console.log('Adding ID')
-    });
-  }
+  // parts.formIdentifier = function(){
+  //   [].forEach.call(document.querySelectorAll('#modal_ebook form'), function(el,i,a) {
+  //       el.name = 'ebook_form';
+  //   });
+  // }
 
 
 
@@ -876,7 +875,6 @@ function onLinkedInLoad() {
 
 // Handle the successful return from the API call
 function onSuccess(data) {
-  console.log(data);
   populateForm("#modal_ebook form",data);
   populateForm("#modal_schedule_demo_main_form form",data)
 }
@@ -887,11 +885,6 @@ function populateForm(formSelector, data) {
   [].forEach.call(document.querySelectorAll(formSelector + " label"), function(el,i,a) {
     var label = el.innerText.trim().toLowerCase().replace(' ', '-');
     var input = document.querySelector("#" + el.getAttribute('for'));
-
-    console.log(el);
-    console.log(label);
-    console.log(data, input);
-
 
     switch(label){
       case "name":
@@ -915,7 +908,7 @@ function populateForm(formSelector, data) {
 
 // Handle an error response from the API call
 function onError(error) {
-  console.log(error);
+
 }
 
 // Use the API call wrapper to request the member's basic profile data
