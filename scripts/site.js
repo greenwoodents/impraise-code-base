@@ -920,9 +920,6 @@ var web = (function () {
       listContainer.addEventListener('click', function(e){
         var el = e.target;
 
-        console.log(el);
-        console.log(el.classList.contains('active'));
-
         if(el.classList.contains('active')){
           el.classList.remove('active');
           allItems('remove', 'tag-hidden');
@@ -943,11 +940,9 @@ var web = (function () {
         }
 
 
-        checkEmpty('.resource_items','tag-hidden');
+        checkEmpty('.js-filter-wrap','tag-hidden');
       })
     };
-
-
 
     //Hide empty
     //chce for empty sections and hide them.
@@ -983,7 +978,7 @@ var web = (function () {
   })();
 
   parts.resourcepage = function() {
-    FilterMe.init('.display-tags', '.resource_item_wrap');
+    FilterMe.init('.display-tags', '.js-filter-item');
   }
 
 
