@@ -4,25 +4,21 @@ var web = (function () {
    * When set to true, you get helpful console logs.
    * @const DEBUG
    */
-  var DEBUG = false;
-
   var scrollMe = {};
   var resizeMe = {};
   var pressMe = {};
   var parts = {};
-  var mq = window.matchMedia( "(max-width: 720px)" );
+  var mq = window.matchMedia('(max-width: 720px)');
 
-
-
-  function runMethods(obj,e) {
+  function runMethods (obj, e) {
     for (var key in obj) {
-     if (obj.hasOwnProperty(key)) {
+      if (obj.hasOwnProperty(key)) {
         obj[key].call(e);
       }
     }
-  };
+  }
 
-  function httpGetAsync(theUrl, callback) {
+  function httpGetAsync (theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -671,6 +667,7 @@ var web = (function () {
         bcg = document.querySelector(id + ' ' +'.modal_schedule_demo_bcg'),
         body = document.body,
 
+
     closeModal = function(){
       body.classList.remove('modal-active');
       modal.classList.remove('visible');
@@ -711,6 +708,7 @@ var web = (function () {
       var modal = document.querySelector(id),
           close = document.querySelector( id + ' ' +'.modal_schedule_demo_close'),
           bcg = document.querySelector( id + ' ' +'.modal_schedule_demo_bcg'),
+          firstInput = document.querySelector( id + ' ' +'input'),
           body = document.body;
 
 
@@ -719,6 +717,7 @@ var web = (function () {
         if(this.getAttribute('modal') === "ebook"){
           document.querySelector('input[name="SQF_BOOK"]').value = document.title;
         }
+
 
         body.classList.add('modal-active');
         modal.classList.remove('hidden');
@@ -733,6 +732,11 @@ var web = (function () {
         }
 
         sendEvent('Open','Demo request modal');
+
+
+        setTimeout(function(){
+          firstInput.focus();
+        }, 1000)
 
       });
 
@@ -843,13 +847,145 @@ var web = (function () {
 
   parts.openers = function() {
     opener('.js-press-menu-button','.js-press-menu','menu-close');
+  };
+
+
+  //Filtering on resource page
+
+
+
+  var FilterMe = (function(){
+    var exports = {};
+    var items;
+    var tag = '';
+    var listContainer;
+
+    var allItems = function(action, itemclass) {
+      [].forEach.call(items, function(el,i,a) {
+        if(action === "add"){
+          el.classList.add(itemclass);
+        } else if(action === "remove") {
+          el.classList.remove(itemclass);
+        }
+      });
+    };
+
+    // Filter
+    // get all items compere the to active tag.
+    //
+    var filter = function(tag) {
+      //hide all
+      allItems('add', 'tag-hidden');
+
+      //show
+      [].forEach.call(items, function(el,i,a) {
+        var att = el.getAttribute('data-tags') || "";
+
+        if(att === tag){
+          el.classList.remove('tag-hidden');
+        }
+      });
+    };
+
+
+    //construcor
+    //display all tags into DIV.
+    //Delegeta listener to parent of this DIV.
+
+    var init = function(listClass , itemsClass) {
+      listContainer = document.querySelector(listClass);
+      items = document.querySelectorAll(itemsClass);
+      var tags = [];
+
+      [].forEach.call(items, function(el,i,a) {
+        var att = el.getAttribute('data-tags') || "";
+        if(att.length > 1){
+          if(tags.indexOf(att,0) === -1){
+            tags.push(att);
+          }
+        }
+      });
+
+
+      var fragment = document.createDocumentFragment();
+      tags.forEach(function(el){
+        var a = document.createElement('a');
+        a.setAttribute('data-tag', el)
+        a.innerText = el.replace('-', ' ');
+        fragment.appendChild(a);
+      });
+      listContainer.appendChild(fragment);
+
+
+      listContainer.addEventListener('click', function(e){
+        var el = e.target;
+
+        console.log(el);
+        console.log(el.classList.contains('active'));
+
+        if(el.classList.contains('active')){
+          el.classList.remove('active');
+          allItems('remove', 'tag-hidden');
+          checkEmpty('.resource_items','tag-hidden');
+          return;
+        }
+
+        [].forEach.call(listContainer.querySelectorAll('a'), function(el,i,a) {
+          el.classList.remove('active');
+        });
+
+        if(el.classList.contains('active')){
+          el.classList.remove('active');
+          allItems('remove', 'tag-hidden');
+        } else {
+          el.classList.add('active');
+          filter(el.getAttribute('data-tag'));
+        }
+
+
+        checkEmpty('.resource_items','tag-hidden');
+      })
+    };
+
+
+
+    //Hide empty
+    //chce for empty sections and hide them.
+    var checkEmpty = function(selectorParent, classOnChildren) {
+      var hidden = 0;
+
+      [].forEach.call(document.querySelectorAll(selectorParent), function(el,i,a) {
+
+        el.classList.remove('hidden');
+
+        [].forEach.call(el.childNodes,function(element,i,a) {
+
+          if(element.classList.contains(classOnChildren)){
+            hidden++
+          }
+          console.log(el.querySelector('h2').innerText);
+          console.log(hidden, a.length-1);
+          if (hidden === a.length-1) {
+            el.classList.add('hidden');
+          }
+
+        });
+
+        hidden = 0;
+      });
+    };
+
+    //export functions
+    exports.init = init;
+    exports.filter = init;
+
+    return exports;
+  })();
+
+  parts.resourcepage = function() {
+    FilterMe.init('.display-tags', '.resource_item_wrap');
   }
 
-  // parts.formIdentifier = function(){
-  //   [].forEach.call(document.querySelectorAll('#modal_ebook form'), function(el,i,a) {
-  //       el.name = 'ebook_form';
-  //   });
-  // }
 
 
 
@@ -860,9 +996,8 @@ var web = (function () {
 
 
 
-
-function liAuth(){
-   IN.User.authorize(function(){
+function liAuth (){
+   IN.User.authorize(function (){
        onLinkedInLoad();
    });
 }
@@ -908,7 +1043,7 @@ function populateForm(formSelector, data) {
 
 // Handle an error response from the API call
 function onError(error) {
-
+  console.log(error);
 }
 
 // Use the API call wrapper to request the member's basic profile data

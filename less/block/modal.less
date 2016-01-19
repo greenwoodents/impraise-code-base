@@ -48,6 +48,7 @@
   .desktop {
     visibility: hidden;
     opacity: 0;
+    display: none;
   }
 
   @media @modalBreakSmall {
@@ -399,6 +400,7 @@
 
       &:focus {
         background-color: transparent;
+        border-bottom: 2px solid #82909B;
       }
     }
 
@@ -623,12 +625,16 @@
 
 .modal_schedule_demo_main_form {
   @media @medium {
-  input.button {
-    width: 60%;
-    display: inline;
-    margin: 0 auto;
+    input.button {
+      width: 60%;
+      display: inline;
+      margin: 0 auto;
+    }
   }
 }
+
+.linked-in-button.mobile {
+  margin: 20px 0 30px;
 }
 
 
