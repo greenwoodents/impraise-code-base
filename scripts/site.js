@@ -859,6 +859,7 @@ var web = (function () {
     var items;
     var tag = '';
     var listContainer;
+    var _itemsClass;
 
     var allItems = function(action, itemclass) {
       [].forEach.call(items, function(el,i,a) {
@@ -893,6 +894,7 @@ var web = (function () {
     //Delegeta listener to parent of this DIV.
 
     var init = function(listClass , itemsClass) {
+      _itemsClass = itemsClass;
       listContainer = document.querySelector(listClass);
       items = document.querySelectorAll(itemsClass);
       var tags = [];
@@ -952,15 +954,14 @@ var web = (function () {
       [].forEach.call(document.querySelectorAll(selectorParent), function(el,i,a) {
 
         el.classList.remove('hidden');
-
-        [].forEach.call(el.childNodes,function(element,i,a) {
+        console.log(el.querySelectorAll(_itemsClass));
+        [].forEach.call(el.querySelectorAll(_itemsClass),function(element,i,a) {
 
           if(element.classList.contains(classOnChildren)){
-            hidden++
+            hidden++;
           }
-          console.log(el.querySelector('h2').innerText);
-          console.log(hidden, a.length-1);
-          if (hidden === a.length-1) {
+          console.log(hidden, a.length);
+          if (hidden === a.length) {
             el.classList.add('hidden');
           }
 

@@ -15,7 +15,7 @@ var path = require('path');
 gulp.task('scripts', function() {
     return gulp.src('scripts/*.js')
         .pipe(concat('all.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest('template/scripts/'))
 });
 
