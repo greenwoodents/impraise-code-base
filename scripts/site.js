@@ -711,7 +711,7 @@ var web = (function () {
       el.addEventListener('click', function(){
 
         if(this.getAttribute('modal') === "ebook"){
-          document.querySelector('input[name="SQF_BOOK"]').value = document.title;
+          document.querySelector('input[name="SQF_BOOK"]').value = el.parentNode.querySelector('.js-ebook-title').innerText;
         }
 
 
@@ -727,7 +727,12 @@ var web = (function () {
           window.scrollTo(0,0);
         }
 
-        sendEvent('Open','Demo request modal');
+        if(this.getAttribute('modal') === "ebook"){
+          sendEvent('Open','Ebook request modal');
+        } else {
+          sendEvent('Open','Ebook request modal');
+        }
+
 
 
         setTimeout(function(){
@@ -943,7 +948,7 @@ var web = (function () {
     };
 
     //Hide empty
-    //chce for empty sections and hide them.
+    //check for empty sections and hide them.
     var checkEmpty = function(selectorParent, classOnChildren) {
       var hidden = 0;
 
