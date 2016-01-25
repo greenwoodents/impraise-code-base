@@ -37,6 +37,7 @@ var web = (function () {
     parts.readerLine();
     parts.slideshow();
     parts.socialCounting();
+    parts.modalOpeners();
   };
 
 
@@ -711,7 +712,13 @@ var web = (function () {
       el.addEventListener('click', function(){
 
         if(this.getAttribute('modal') === "ebook"){
-          document.querySelector('input[name="SQF_BOOK"]').value = el.parentNode.querySelector('.js-ebook-title').innerText;
+          var title = el.parentNode.querySelector('.js-ebook-title');
+          if (title === null) {
+            title = document.title;
+          } else {
+            title = title.innerText;
+          }
+          document.querySelector('input[name="SQF_BOOK"]').value = title;
         }
 
 
@@ -899,6 +906,11 @@ var web = (function () {
       listContainer = document.querySelector(listClass);
       items = document.querySelectorAll(itemsClass);
       var tags = [];
+
+      if (items.length === 0 || listContainer === null) {
+        return  false;
+      }
+
 
       [].forEach.call(items, function(el,i,a) {
         var att = el.getAttribute('data-tags') || "";
