@@ -29,11 +29,20 @@
     color: #90ADC5;
     line-height: 16px;
     text-align: right;
+
+    @media @930 {
+      text-align: center;
+    }
   }
 
 
   .display-tags {
     text-align: right;
+
+    @media @930 {
+      text-align: center;
+    }
+    
     a {
       transition: 300ms;
       font-size: 16px;
@@ -48,12 +57,9 @@
       display: inline-block;
       margin-left: 8px;
 
+      &:hover,
       &.active {
         background-color: @mainColor;
-      }
-
-      @media @930 {
-        text-align: center;
       }
     }
 
@@ -306,6 +312,12 @@
   .publishedin {
     margin: 0;
 
+    .publishedin_items_ct {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
     .publishedin_item {
       padding: 0 20px 0 0;
     }
@@ -316,6 +328,11 @@
       opacity: 1;
       position: relative;
       float: left;
+    }
+
+    .publishedin_item_title {
+      top:0px;
+      margin-top: 10px;
     }
   }
 }

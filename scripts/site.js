@@ -565,18 +565,14 @@ var web = (function () {
     'RS','IM','RS','ME'],
 
     getState = function(){
-
-      if(location.protocol == 'http:'){
-        httpGetAsync('http://ipinfo.io/country',function(response) {
-          proceed(response);
-        });
-      }
-
+      httpGetAsync('https://freegeoip.net/json/',function(response) {
+        proceed(JSON.parse(response));
+      });
     },
 
     proceed = function(resp) {
       [].forEach.call(states, function(s,i,a) {
-        if(s.trim() == resp.trim()){
+        if(s.trim() == resp['country_code'].trim()){
           [].forEach.call(document.querySelectorAll('.us-adress'), function(el,i,a) {
             el.classList.add('hide');
           });
