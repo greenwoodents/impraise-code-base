@@ -189,11 +189,18 @@
     vertical-align: top;
   }
   &--image {
+    position: relative;
+    .playbutton {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
     @media @small {
       display: none;
       visibility: hidden;
       opacity: 0;
-     max-height: 0;
+      max-height: 0;
     }
   }
 

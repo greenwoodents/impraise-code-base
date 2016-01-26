@@ -665,12 +665,16 @@ var web = (function () {
         body = document.body,
 
 
-    closeModal = function(){
+    closeModal = function(e){
       body.classList.remove('modal-active');
       modal.classList.remove('visible');
       modal.classList.add('hidden');
 
-      sendEvent('Close','Demo request modal');
+      if(this.getAttribute('modal') === "ebook"){
+        sendEvent('Close','Ebook request modal');
+      } else {
+        sendEvent('Close','Demo request modal');
+      }
     };
 
 
@@ -680,7 +684,7 @@ var web = (function () {
       closeModal();
     };
 
-    close.addEventListener('click', closeModal);
+    close.addEventListener('click', function(e){closeModal(e)});
     bcg.addEventListener('click', closeModal);
 
   };
@@ -737,7 +741,7 @@ var web = (function () {
         if(this.getAttribute('modal') === "ebook"){
           sendEvent('Open','Ebook request modal');
         } else {
-          sendEvent('Open','Ebook request modal');
+          sendEvent('Open','Modal request modal');
         }
 
 
@@ -967,13 +971,11 @@ var web = (function () {
       [].forEach.call(document.querySelectorAll(selectorParent), function(el,i,a) {
 
         el.classList.remove('hidden');
-        console.log(el.querySelectorAll(_itemsClass));
-        [].forEach.call(el.querySelectorAll(_itemsClass),function(element,i,a) {
 
+        [].forEach.call(el.querySelectorAll(_itemsClass),function(element,i,a) {
           if(element.classList.contains(classOnChildren)){
             hidden++;
           }
-          console.log(hidden, a.length);
           if (hidden === a.length) {
             el.classList.add('hidden');
           }
