@@ -37,7 +37,6 @@ var web = (function () {
     parts.readerLine();
     parts.slideshow();
     parts.socialCounting();
-    parts.modalOpeners();
   };
 
 
@@ -260,7 +259,6 @@ var web = (function () {
 
       el.addEventListener('click', function(){
         var form = el.parentNode.parentNode;
-
 
         var submiter = function() {
           if(form.classList.contains('submitting')){
@@ -748,6 +746,13 @@ var web = (function () {
 
         setTimeout(function(){
           firstInput.focus();
+
+          modal.querySelector('[placeholder="(111) 123-4567"]').addEventListener('keyup',function(e){
+            var val = e.target.value;
+            if (val.indexOf('+') === 0) {
+              e.target.value = val.replace('+','');
+            }
+          });
         }, 1000)
 
       });
