@@ -108,11 +108,12 @@ var web = (function () {
   /*
     Share buttons affix
   */
-  scrollMe.affix = function() {
-    if (!(document.querySelector('.social_block'))){
+  var affix = function(el, offset) {
+    if (!(document.querySelector(el))){
       return;
     }
-    var jsAboutUsNav = document.querySelector('.social_block');
+
+    var jsAboutUsNav = document.querySelector('.js-affix');
     var page = document.querySelector('.page');
 
     if(mq.matches){
@@ -123,29 +124,34 @@ var web = (function () {
       return false
     }
 
-    var footer = document.querySelector('.email_signup'),
-        elStyle = jsAboutUsNav.style,
+    var elStyle = jsAboutUsNav.style,
         scrollTop = window.pageYOffset,
         a = scrollTop - document.querySelector('.js-affix-header').offsetHeight,
-        b = scrollTop - document.querySelector('.js-affix-body').offsetHeight - 375;
+        b = scrollTop - document.querySelector('.js-affix-body').offsetHeight + (offset);
 
     if(a > 0 && b < 0){
       elStyle.cssText = null;
       elStyle.position = 'fixed';
-      elStyle.top = '10%';
+      elStyle.top = '0';
     } else {
       if(a < 0){
         elStyle.cssText = null;
         elStyle.position = 'absolute';
-        elStyle.top = '0px';
+        elStyle.top = '0';
       }
       if(b > 0){
         elStyle.cssText = null;
         elStyle.position = 'absolute';
-        elStyle.bottom = '0px';
+        elStyle.bottom = '0';
       }
     };
   };
+
+  scrollMe.affixes = function() {
+    affix('.social_block',-380);
+    affix('.resource-affix', 0);
+    affix('.press-affix', 200);
+  }
 
 
   /**
@@ -868,9 +874,6 @@ var web = (function () {
 
 
   //Filtering on resource page
-
-
-
   var FilterMe = (function(){
     var exports = {};
     var items;
