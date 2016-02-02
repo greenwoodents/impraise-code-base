@@ -689,8 +689,9 @@ var web = (function () {
     };
 
     close.addEventListener('click', function(e){closeModal(e)});
-    bcg.addEventListener('click', closeModal);
-
+    if (bcg) {
+      bcg.addEventListener('click', closeModal);
+    }
   };
 
   parts.modalOpeners = function(){
@@ -893,8 +894,10 @@ var web = (function () {
 
     // Filter
     // get all items compere the to active tag.
-    //
     var filter = function(tag) {
+      if (window.pageYOffset > 700) {
+        window.scrollTo(0,400);
+      }
       //hide all
       allItems('add', 'tag-hidden');
 
@@ -902,7 +905,14 @@ var web = (function () {
       [].forEach.call(items, function(el,i,a) {
         var att = el.getAttribute('data-tags') || "";
 
-        if(att === tag){
+        if (att.indexOf(',') > 0) {
+          att = att.split(',');
+          att.forEach(function (item) {
+            if(item === tag){
+              el.classList.remove('tag-hidden');
+            }
+          })
+        } else if(att === tag){
           el.classList.remove('tag-hidden');
         }
       });
@@ -923,17 +933,26 @@ var web = (function () {
         return  false;
       }
 
-
+      //Gather all tags
       [].forEach.call(items, function(el,i,a) {
         var att = el.getAttribute('data-tags') || "";
         if(att.length > 1){
-          if(tags.indexOf(att,0) === -1){
+
+          if (att.indexOf(',') > 0) {
+            att = att.split(',');
+            att.forEach(function (item) {
+              if(tags.indexOf(item,0) === -1){
+                tags.push(item);
+              }
+            })
+          } else if(tags.indexOf(att,0) === -1){
             tags.push(att);
           }
+
         }
       });
 
-
+      //Create fragment ad append tags to listContainer class
       var fragment = document.createDocumentFragment();
       tags.forEach(function(el){
         var a = document.createElement('a');

@@ -222,13 +222,47 @@
   }
 }
 
+.ebook-form-wrap {
+  @media @medium {
+    padding-left: 22px;
+  }
+}
 
 //eBook item
 .ebook-content {
+  padding-bottom: 50px;
+  @media @medium {
+    padding-top: 30px;
+    padding-bottom: 190px;
+  }
+
   p {
     font-size: 16px;
     line-height: 24px;
   }
+
+  h1 {
+    font-family: @openSans;
+    color: rgba(0,0,0,0.87);
+    font-weight: 700;
+    margin: 10px 0 10px;
+    font-size: 28px;
+    line-height: 38px;
+    margin-top: 20px;
+    margin-bottom: 35px;
+
+
+    @media @xmedium {
+      font-size: 38px;
+      line-height: 58px;
+    }
+
+    @media @large {
+      font-size: 48px;
+      line-height: 68px;
+    }
+  }
+
   h2 {
     font-weight: 700;
     font-size: 28px;
@@ -236,6 +270,7 @@
     margin: 0;
     margin-bottom: 10px;
   }
+
   h3 {
     opacity: 0.75;
     font-size: 12px;
@@ -255,6 +290,94 @@
     text-align: right !important;
     padding: 0;
   }
+
+  .bold-hr {
+    height: 8px;
+    width: 100%;
+    opacity: 0.1;
+    background: #30393F;
+  }
+  .ebook-content-img {
+    @media @930 {
+      width: 100%;
+      img {
+        width: 50% !important;
+        margin: 15px auto;
+        display: block;
+      }
+    }
+    img {
+      width: 133%;
+    }
+    @media @small {
+      img {
+        width: 50%;
+        margin: 15px auto;
+        display: block;
+      }
+    }
+  }
+
+  .ebook-content-content {
+
+    @media @medium {
+      padding-left: 80px;
+      padding-right: 10px;
+      margin-top: 30px;
+    }
+    @media @930 {
+      width: 100%;
+      padding-left: 0 ;
+    }
+  }
+
+  .bold-hr {
+    margin: 29px 0 23px;
+  }
+
+  .administration {
+    p {
+      margin-top: 20px;
+      color: #657684;
+    }
+  }
+
+  .ebook-qoute {
+    margin-bottom: 15px;
+    display: block;
+  }
+  .ebook-content_links {
+    padding-left: 0;
+    margin-bottom: 2px;
+
+    @media @small {
+      margin-bottom: 0;
+    }
+
+    li {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 700;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #657684;
+
+      @media @small {
+        max-width: 170px;
+      }
+
+      a {
+        color: #657684;
+      }
+
+      &.active a {
+        color: @mainColor;
+      }
+    }
+
+  }
+
 }
 
 
