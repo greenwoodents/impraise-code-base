@@ -277,7 +277,6 @@ var web = (function () {
 
         var interval = setInterval(function(){ submiter(); }, 200);
 
-
         function checker() {
           var invalid = 0;
 
@@ -285,10 +284,11 @@ var web = (function () {
             var parent = el;
             var input = el.querySelector('.field-element');
 
-
-            input.addEventListener('focus', function(event) {
-              parent.classList.remove('is-invalid');
-            });
+            if (input) {
+              input.addEventListener('focus', function(event) {
+                parent.classList.remove('is-invalid');
+              });
+            }
 
             parent.classList.remove('is-ok');
             parent.classList.remove('is-invalid');
@@ -303,9 +303,8 @@ var web = (function () {
 
           if(invalid === 0){
             sendEvent('Submited','Demo request modal');
+            return true;
           }
-
-
         }
 
 
@@ -666,70 +665,72 @@ var web = (function () {
     var modal = document.querySelector(id),
         close = document.querySelector(id + ' ' +'.modal_schedule_demo_close'),
         bcg = document.querySelector(id + ' ' +'.modal_schedule_demo_bcg'),
-        body = document.body,
+        body = document.body;
 
 
-    closeModal = function(e){
+    var closeModal = function(e){
       body.classList.remove('modal-active');
       modal.classList.remove('visible');
       modal.classList.add('hidden');
 
-      if(this.getAttribute('modal') === "ebook"){
+      console.log(e.target);
+      if(e.target.getAttribute('modal') === "#ebook_modal"){
         sendEvent('Close','Ebook request modal');
       } else {
         sendEvent('Close','Demo request modal');
       }
     };
 
-
-
     pressMe.closeForm = function(e){
       try { event.stopImmediatePropagation(); } catch (err) { console.log(err); }
       closeModal();
     };
 
-    close.addEventListener('click', function(e){closeModal(e)});
+    if (close) {
+      close.addEventListener('click', function(e){closeModal(e)});
+    }
+
     if (bcg) {
       bcg.addEventListener('click', closeModal);
     }
+
   };
 
   parts.modalOpeners = function(){
     modalOpen('#demo_modal');
     modalOpen('#ebook_modal');
-
+    modalOpen('#white-papers_modal');
 
     //Buttons listeners
-
     [].forEach.call(document.querySelectorAll('.js-modal-open-schedule'), function(el,i,a) {
       var id;
 
-      if(el.getAttribute('modal') === "ebook"){
-        id = '#ebook_modal';
+      if(el.getAttribute('modal')) {
+        id = el.getAttribute('modal');
       } else {
         id = '#demo_modal';
       }
-
 
       var modal = document.querySelector(id),
           close = document.querySelector( id + ' ' +'.modal_schedule_demo_close'),
           bcg = document.querySelector( id + ' ' +'.modal_schedule_demo_bcg'),
           firstInput = document.querySelector( id + ' ' +'input'),
-          body = document.body;
-
+          body = document.body
 
       el.addEventListener('click', function(){
 
-        if(this.getAttribute('modal') === "ebook"){
+        if(this.getAttribute('modal') === "#ebook_modal" || this.getAttribute('modal') === "#white-papers_modal"){
           var title = el.parentNode.querySelector('.js-ebook-title');
           if (title === null) {
-            title = document.title;
+            title = document.title.split('—')[0];
           } else {
             title = title.innerText;
           }
-          document.querySelector('input[name="SQF_BOOK"]').value = title;
-        }
 
+          [].forEach.call(document.querySelectorAll('input[name="SQF_BOOK"]'), function(el,i,a) {
+            el.value = title;
+          })
+        }
 
         body.classList.add('modal-active');
         modal.classList.remove('hidden');
@@ -743,28 +744,37 @@ var web = (function () {
           window.scrollTo(0,0);
         }
 
-        if(this.getAttribute('modal') === "ebook"){
+        if(this.getAttribute('modal') === "#ebook_modal" || this.getAttribute('modal') === "#white-papers_modal"){
           sendEvent('Open','Ebook request modal');
         } else {
           sendEvent('Open','Modal request modal');
         }
 
-
-
         setTimeout(function(){
           firstInput.focus();
 
-          modal.querySelector('[placeholder="(111) 123-4567"]').addEventListener('keyup',function(e){
-            var val = e.target.value;
-            if (val.indexOf('+') === 0) {
-              e.target.value = val.replace('+','');
-            }
-          });
+          if (modal.querySelector('[placeholder="(111) 123-4567"]')) {
+            modal.querySelector('[placeholder="(111) 123-4567"]').addEventListener('keyup',function(e){
+              var val = e.target.value;
+              if (val.indexOf('+') === 0) {
+                e.target.value = val.replace('+','');
+              }
+            });
+          }
+
         }, 1000)
 
       });
 
     });
+
+    if (document.querySelector('.modal_schedule_landingPage')) {
+      [].forEach.call(document.querySelectorAll('input[name="SQF_BOOK"]'), function(el,i,a) {
+        el.value = document.title.split('—')[0];
+      })
+    }
+
+
   };
 
   /*
@@ -1049,15 +1059,33 @@ function onLinkedInLoad() {
 // Handle the successful return from the API call
 function onSuccess(data) {
   populateForm("#modal_ebook form",data);
-  populateForm("#modal_schedule_demo_main_form form",data)
+  populateForm("#white-papers_modal form",data);
+  populateForm("#modal_schedule_demo_main_form form",data);
+
 }
 
 function populateForm(formSelector, data) {
   var data = data['values'][0];
 
-  [].forEach.call(document.querySelectorAll(formSelector + " label"), function(el,i,a) {
+  var positions = data.positions;
+  var positionCount = positions._total;
+  var allPositions = "";
+  for(var i = 0; i < positionCount; i++) {
+    var company = positions.values[i].company.name || "";
+    var title = positions.values[i].title || "";
+    allPositions += title + " at " + company + ", ";
+  }
+
+
+  [].forEach.call(document.querySelectorAll(formSelector + " label"), function(el) {
+
     var label = el.innerText.trim().toLowerCase().replace(' ', '-');
-    var input = document.querySelector("#" + el.getAttribute('for'));
+    var parent = el.parentNode;
+    var input = parent.querySelector('input');
+
+    console.log(data);
+    console.log(label);
+    console.log(input);
 
     switch(label){
       case "name":
@@ -1067,16 +1095,28 @@ function populateForm(formSelector, data) {
         input.value = data['emailAddress'];
         break;
       case "position":
-        input.value = data['headline'];
+        input.value = allPositions;
         break;
       case "role":
-        input.value = data['headline'];
+        input.value = positions.values[0].title;
+        break;
+      case "organization":
+        input.value = positions.values[0].company.name;
         break;
       default:
         break;
     }
-
   });
+
+  [].forEach.call(document.querySelectorAll('input[name="SQF_POSITIONS"]'), function(el) {
+    el.value = allPositions;
+  });
+
+  [].forEach.call(document.querySelectorAll('input[name="SQF_HEADLINE"]'), function(el) {
+    el.value = data['headline'];
+  });
+
+
 };
 
 // Handle an error response from the API call
@@ -1086,5 +1126,5 @@ function onError(error) {
 
 // Use the API call wrapper to request the member's basic profile data
 function getProfileData() {
-  IN.API.Profile("me").fields("first-name", "last-name", "email-address", "headline", "id").result(onSuccess).error(onError);
+  IN.API.Profile("me").fields("first-name", "last-name", "email-address", "headline", "id", "positions").result(onSuccess).error(onError);
 }
