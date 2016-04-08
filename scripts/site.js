@@ -302,7 +302,16 @@ var web = (function () {
           });
 
           if(invalid === 0){
+            if (document.querySelector('.js-resource-list')) {
+
+            setTimeout(function(){
+              window.location.href = window.location.href;
+             }, 1000);
+
+            }
             sendEvent('Submited','Demo request modal');
+
+
             return true;
           }
         }
@@ -317,17 +326,20 @@ var web = (function () {
    */
   parts.socialCounting = function() {
     [].forEach.call(document.querySelectorAll('.social_block'), function(el,i,a) {
-    Socialcount.all(function (counts) {
-      if(counts.facebook > 0){
-        el.querySelector('.facebook .count').innerHTML = counts.facebook;
+      if (typeof Socialcount !== 'undefined') {
+        Socialcount.all(function (counts) {
+          if(counts.facebook > 0){
+            el.querySelector('.facebook .count').innerHTML = counts.facebook;
+          }
+          if(counts.google > 0){
+            el.querySelector('.google .count').innerHTML = counts.google;
+          }
+          if(counts.linkedin > 0){
+            el.querySelector('.linkedin .count').innerHTML = counts.linkedin;
+          }
+        });
       }
-      if(counts.google > 0){
-        el.querySelector('.google .count').innerHTML = counts.google;
-      }
-      if(counts.linkedin > 0){
-        el.querySelector('.linkedin .count').innerHTML = counts.linkedin;
-      }
-    });
+
     });
   };
 
@@ -672,8 +684,6 @@ var web = (function () {
       body.classList.remove('modal-active');
       modal.classList.remove('visible');
       modal.classList.add('hidden');
-
-      console.log(e.target);
       if(e.target.getAttribute('modal') === "#ebook_modal"){
         sendEvent('Close','Ebook request modal');
       } else {
@@ -715,7 +725,7 @@ var web = (function () {
           close = document.querySelector( id + ' ' +'.modal_schedule_demo_close'),
           bcg = document.querySelector( id + ' ' +'.modal_schedule_demo_bcg'),
           firstInput = document.querySelector( id + ' ' +'input'),
-          body = document.body
+          body = document.body;
 
       el.addEventListener('click', function(){
 
@@ -753,12 +763,15 @@ var web = (function () {
         setTimeout(function(){
           firstInput.focus();
 
-          if (modal.querySelector('[placeholder="(111) 123-4567"]')) {
-            modal.querySelector('[placeholder="(111) 123-4567"]').addEventListener('keyup',function(e){
+          if (modal.querySelector('[placeholder="+1 (111) 123-4567"]')) {
+            modal.querySelector('[placeholder="+1 (111) 123-4567"]').addEventListener('keyup',function(e){
               var val = e.target.value;
               if (val.indexOf('+') === 0) {
-                e.target.value = val.replace('+','');
+                e.target.value = "'" + val ;
               }
+
+              console.log(e.target.value);
+
             });
           }
 
@@ -1082,10 +1095,6 @@ function populateForm(formSelector, data) {
     var label = el.innerText.trim().toLowerCase().replace(' ', '-');
     var parent = el.parentNode;
     var input = parent.querySelector('input');
-
-    console.log(data);
-    console.log(label);
-    console.log(input);
 
     switch(label){
       case "name":
