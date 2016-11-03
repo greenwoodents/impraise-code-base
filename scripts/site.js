@@ -1,3 +1,20 @@
+/*
+  Event function
+
+  For FB pixel are arguments concat.
+  Usage. sendEvent('Open','Demo request modal');
+*/
+function sendEvent(eventCategory, eventAction) {
+  var evt = eventCategory + ' ' + eventAction;
+  fbq('track', evt);
+
+  ga('send', {
+    hitType: 'event',
+    eventCategory: eventCategory,
+    eventAction: eventAction,
+  });
+};
+
 var web = (function () {
   'use strict';
   /**
@@ -40,22 +57,7 @@ var web = (function () {
   };
 
 
-  /*
-    Event function
 
-    For FB pixel are arguments concat.
-    Usage. sendEvent('Open','Demo request modal');
-  */
-  function sendEvent(eventCategory, eventAction) {
-    var evt = eventCategory + ' ' + eventAction;
-    fbq('track', evt);
-
-    ga('send', {
-      hitType: 'event',
-      eventCategory: eventCategory,
-      eventAction: eventAction,
-    });
-  };
 
 
   /**
@@ -307,11 +309,7 @@ var web = (function () {
             setTimeout(function(){
               window.location.href = window.location.href;
              }, 1000);
-
             }
-            sendEvent('Submited','Demo request modal');
-
-
             return true;
           }
         }
@@ -684,11 +682,7 @@ var web = (function () {
       body.classList.remove('modal-active');
       modal.classList.remove('visible');
       modal.classList.add('hidden');
-      if(e.target.getAttribute('modal') === "#ebook_modal"){
-        sendEvent('Close','Ebook request modal');
-      } else {
-        sendEvent('Close','Demo request modal');
-      }
+
     };
 
     pressMe.closeForm = function(e){
@@ -752,12 +746,6 @@ var web = (function () {
 
         if(mq.matches){
           window.scrollTo(0,0);
-        }
-
-        if(this.getAttribute('modal') === "#ebook_modal" || this.getAttribute('modal') === "#white-papers_modal"){
-          sendEvent('Open','Ebook request modal');
-        } else {
-          sendEvent('Open','Modal request modal');
         }
 
         setTimeout(function(){
