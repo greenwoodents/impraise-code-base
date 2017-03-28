@@ -54,6 +54,7 @@ var web = (function () {
     parts.readerLine();
     parts.slideshow();
     parts.socialCounting();
+    parts.ebookCapitalize();
   };
 
 
@@ -100,9 +101,10 @@ var web = (function () {
    */
 
   var refreshImages = function() {
-    [].forEach.call(document.querySelectorAll('img[data-src]'), function(el,i,a) {
-      ImageLoader.load(el);
-    });
+     var images = document.querySelectorAll('img[data-src]' );
+      for (var i = 0; i < images.length; i++) {
+        ImageLoader.load(images[i], {load: true});
+      }
   };
   resizeMe.refreshImages = refreshImages;
   parts.refreshimages = refreshImages;
@@ -319,6 +321,22 @@ var web = (function () {
       })
     });
   };
+
+-//modification of ebook form
+-  parts.ebookCapitalize = function() {
+-   [].forEach.call(document.querySelectorAll('#ebook_modal .field-element'), function(el,i,a) {
+-      el.addEventListener('keyup', function(e){
+-
+-        var val = e.target.value;
+-        var head = val.substring(0,1);
+-        var tail = val.substring(1,val.length);
+-
+-        if (head == head.toLowerCase()) {
+-          e.target.value = head.toUpperCase()  + tail;
+-        }
+-      });
+-    });
+-  };
 
   /*
     Share buttons counter display.
