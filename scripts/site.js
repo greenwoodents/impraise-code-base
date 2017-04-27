@@ -322,21 +322,21 @@ var web = (function () {
     });
   };
 
--//modification of ebook form
--  parts.ebookCapitalize = function() {
--   [].forEach.call(document.querySelectorAll('#ebook_modal .field-element'), function(el,i,a) {
--      el.addEventListener('keyup', function(e){
--
--        var val = e.target.value;
--        var head = val.substring(0,1);
--        var tail = val.substring(1,val.length);
--
--        if (head == head.toLowerCase()) {
--          e.target.value = head.toUpperCase()  + tail;
--        }
--      });
--    });
--  };
+//modification of ebook form
+parts.ebookCapitalize = function() {
+  [].forEach.call(document.querySelectorAll('#ebook_modal .field-element'), function(el,i,a) {
+    el.addEventListener('keyup', function(e){
+
+      var val = e.target.value;
+      var head = val.substring(0,1);
+      var tail = val.substring(1,val.length);
+
+      if (head == head.toLowerCase()) {
+        e.target.value = head.toUpperCase()  + tail;
+      }
+    });
+  });
+};
 
   /*
     Share buttons counter display.
