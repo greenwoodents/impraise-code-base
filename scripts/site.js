@@ -312,7 +312,7 @@ var web = (function () {
               window.location.href = window.location.href;
              }, 1000);
             }
-            sendEvent('Submited','Demo request modal');
+            //sendEvent('Submited','Demo request modal');
             return true;
           }
         }
